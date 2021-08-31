@@ -47,6 +47,7 @@ export default class Level1 extends Phaser.Scene {
     // player
     this.player = this.physics.add.sprite(400, 550, 'dude')
     this.player.setBounce(1.3)
+    this.player.setCollideWorldBounds(true)
 
     //vertical mover
     this.vertical_mover = this.createEntity(
@@ -59,7 +60,8 @@ export default class Level1 extends Phaser.Scene {
       },
       0,
       -200,
-      0.5
+      0.5,
+      false
     )
 
     //Horizontal Mover
@@ -73,7 +75,8 @@ export default class Level1 extends Phaser.Scene {
       },
       200,
       0,
-      0.5
+      0.5,
+      false
     )
 
     //bomb
@@ -87,7 +90,8 @@ export default class Level1 extends Phaser.Scene {
       },
       400,
       Math.random() * 180,
-      2
+      2,
+      true
     )
 
     //bomb2
@@ -100,7 +104,9 @@ export default class Level1 extends Phaser.Scene {
         this.hitObstacle('რაღაც კიდევ უფრო ცუდი მოხდა!')
       },
       -300,
-      Math.random() * 180
+      Math.random() * 180,
+      1,
+      true
     )
 
     //helper
@@ -114,7 +120,8 @@ export default class Level1 extends Phaser.Scene {
       },
       400,
       80,
-      2
+      2,
+      true
     )
     this.helper.setTint(0x60ac23)
   }
@@ -149,11 +156,11 @@ export default class Level1 extends Phaser.Scene {
     this.d = this.input.keyboard.addKey('D')
   }
 
-  createEntity(variable, x, y, imageName, func, xVel, yVel, scale = 1) {
+  createEntity(variable, x, y, imageName, func, xVel, yVel, scale = 1, collide) {
     variable = this.physics.add.sprite(x, y, imageName).setScale(scale)
     this.physics.add.collider(this.player, variable, func, null, this)
     variable.setBounce(1)
-    variable.setCollideWorldBounds(true)
+    variable.setCollideWorldBounds(collide)
     variable.setVelocity(xVel, yVel)
     return variable
   }
