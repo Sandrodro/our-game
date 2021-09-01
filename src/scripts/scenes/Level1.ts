@@ -60,7 +60,7 @@ export default class Level1 extends Phaser.Scene {
     this.vertical_mover = this.createEntity(
       this.vertical_mover,
       100,
-      200,
+      300,
       'vertical',
       () => {
         this.hitObstacle('ვერტიკალურს დაეტაკე!', this.vertical_mover)
@@ -74,7 +74,7 @@ export default class Level1 extends Phaser.Scene {
     //Horizontal Mover
     this.horizontal_mover = this.createEntity(
       this.horizontal_mover,
-      100,
+      400,
       100,
       'horizontal',
       () => {
@@ -90,20 +90,20 @@ export default class Level1 extends Phaser.Scene {
   update() {
     //Vertical Mover
     if (this.vertical_mover.y < 50) {
-      this.vertical_mover.setX(this.vertical_mover.x + 30)
+      this.vertical_mover.setX(this.vertical_mover.x + (Math.random() > 0.35 ? 30 : -40))
       this.vertical_mover.setVelocity(0, 200)
     } else if (this.vertical_mover.y > this.screenHeight - 50) {
-      this.vertical_mover.setX(this.vertical_mover.x + 30)
+      this.vertical_mover.setX(this.vertical_mover.x + (Math.random() > 0.35 ? 30 : -40))
       this.vertical_mover.setVelocity(0, -200)
     }
 
     //Horizontal Mover
 
     if (this.horizontal_mover.x > this.screenWidth - 70) {
-      this.horizontal_mover.setY(this.horizontal_mover.y + 20)
+      this.horizontal_mover.setY(this.horizontal_mover.y + (Math.random() > 0.35 ? 30 : -25))
       this.horizontal_mover.setVelocity(-200, 0)
     } else if (this.horizontal_mover.x < 70) {
-      this.horizontal_mover.setY(this.horizontal_mover.y + 20)
+      this.horizontal_mover.setY(this.horizontal_mover.y + (Math.random() > 0.35 ? 30 : -25))
       this.horizontal_mover.setVelocity(200, 0)
     }
 
