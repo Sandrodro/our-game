@@ -46,22 +46,29 @@ export default class Level1 extends Phaser.Scene {
 
     // player
     this.player = this.physics.add.sprite(400, 550, 'dude')
-    this.player.setBounce(1.3)
+    this.player.setBounce(1.4)
     this.player.setCollideWorldBounds(true)
+
+    //bomb
+    this.createBomb(this.bomb)
+    //bomb2
+    this.createBomb2(this.bomb2)
+    //helper
+    this.createHelper(this.helper)
 
     //vertical mover
     this.vertical_mover = this.createEntity(
-      this.horizontal_mover,
+      this.vertical_mover,
       100,
-      100,
+      200,
       'vertical',
       () => {
-        this.hitObstacle('ვერტიკალურს დაეტაკე!')
+        this.hitObstacle('ვერტიკალურს დაეტაკე!', this.vertical_mover)
       },
       0,
       -200,
       0.5,
-      false
+      true
     )
 
     //Horizontal Mover
@@ -71,82 +78,93 @@ export default class Level1 extends Phaser.Scene {
       100,
       'horizontal',
       () => {
-        this.hitObstacle('ჰორიზონტალურს დაეტაკე!')
+        this.hitObstacle('ჰორიზონტალურს დაეტაკე!', this.horizontal_mover)
       },
       200,
       0,
       0.5,
-      false
+      true
     )
+  }
 
-    //bomb
-    this.bomb = this.createEntity(
-      this.bomb,
+  update() {
+    //Vertical Mover
+    if (this.vertical_mover.y < 50) {
+      this.vertical_mover.setX(this.vertical_mover.x + 30)
+      this.vertical_mover.setVelocity(0, 200)
+    } else if (this.vertical_mover.y > this.screenHeight - 50) {
+      this.vertical_mover.setX(this.vertical_mover.x + 30)
+      this.vertical_mover.setVelocity(0, -200)
+    }
+
+    //Horizontal Mover
+
+    if (this.horizontal_mover.x > this.screenWidth - 70) {
+      this.horizontal_mover.setY(this.horizontal_mover.y + 20)
+      this.horizontal_mover.setVelocity(-200, 0)
+    } else if (this.horizontal_mover.x < 70) {
+      this.horizontal_mover.setY(this.horizontal_mover.y + 20)
+      this.horizontal_mover.setVelocity(200, 0)
+    }
+
+    this.playerMove()
+  }
+
+  createBomb(variable) {
+    variable = this.createEntity(
+      variable,
       Math.random() * 500,
       Math.random() * 40,
       'bomb',
       () => {
-        this.hitObstacle('რაღაც ცუდი მოხდა!')
+        this.hitObstacle('რაღაც ცუდი მოხდა!', variable)
+        variable.destroy()
+        window.setTimeout(() => {
+          this.createBomb(variable)
+        }, 2000)
       },
       400,
       Math.random() * 180,
       2,
       true
     )
+  }
 
-    //bomb2
-    this.bomb2 = this.createEntity(
-      this.bomb2,
+  createBomb2(variable) {
+    variable = this.createEntity(
+      variable,
       Math.random() * 300 + 500,
       Math.random() * 40,
       'bomb2',
       () => {
-        this.hitObstacle('რაღაც კიდევ უფრო ცუდი მოხდა!')
+        this.hitObstacle('რაღაც კიდევ უფრო ცუდი მოხდა!', variable)
+        variable.destroy()
+        window.setTimeout(() => {
+          this.createBomb2(variable)
+        }, 2000)
       },
       -300,
       Math.random() * 180,
       1,
       true
     )
+  }
 
-    //helper
-    this.helper = this.createEntity(
-      this.helper,
+  createHelper(variable) {
+    variable = this.createEntity(
+      variable,
       400,
       100,
       'bomb',
       () => {
-        this.hitHelper('რაღაც კარგი მოხდა!')
+        this.hitHelper('რაღაც კარგი მოხდა!', variable)
       },
       400,
       80,
       2,
       true
     )
-    this.helper.setTint(0x60ac23)
-  }
-
-  update() {
-    //Vertical Mover
-    if (this.vertical_mover.y < -40) {
-      this.vertical_mover.setX(this.vertical_mover.x + 50)
-      this.vertical_mover.setVelocity(0, 200)
-    } else if (this.vertical_mover.y > this.screenHeight + 40) {
-      this.vertical_mover.setX(this.vertical_mover.x + 50)
-      this.vertical_mover.setVelocity(0, -200)
-    }
-
-    //Horizontal Mover
-
-    if (this.horizontal_mover.x > this.screenWidth + 40) {
-      this.horizontal_mover.setY(this.horizontal_mover.y + 20)
-      this.horizontal_mover.setVelocity(-200, 0)
-    } else if (this.horizontal_mover.x < -40) {
-      this.horizontal_mover.setY(this.horizontal_mover.y + 20)
-      this.horizontal_mover.setVelocity(200, 0)
-    }
-
-    this.playerMove()
+    variable.setTint(0x60ac23)
   }
 
   createKeys() {
@@ -165,7 +183,7 @@ export default class Level1 extends Phaser.Scene {
     return variable
   }
 
-  hitObstacle(text) {
+  hitObstacle(text, variable) {
     const para = document.createElement('p')
     const node = document.createTextNode(text)
     para.appendChild(node)
@@ -178,7 +196,7 @@ export default class Level1 extends Phaser.Scene {
     this.player.setTint(0xff0000)
   }
 
-  hitHelper(text) {
+  hitHelper(text, variable) {
     this.player.setTint(0x60ac23)
 
     const para = document.createElement('p')
@@ -190,6 +208,10 @@ export default class Level1 extends Phaser.Scene {
     window.setTimeout(() => {
       this.speedUp = 0
     }, 3000)
+    variable.destroy()
+    window.setTimeout(() => {
+      this.createHelper(variable)
+    }, 2000)
   }
 
   playerMove() {
