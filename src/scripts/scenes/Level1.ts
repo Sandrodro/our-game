@@ -3,26 +3,36 @@ export default class Level1 extends Phaser.Scene {
     super('Level1')
   }
 
+  // player avatar
   player
-  cursors
+
+  //enemies
   bomb
   bomb2
   horizontal_mover
   vertical_mover
+
+  //bonuses
   helper
+
+  //live n
   lives = 3
   liveText
   speedUp = 0
-  screenWidth
-  screenHeight
+
+  physicsWidth
+  physicsHeight
+
+  gameWidth
+  gameHeight
+
+  messages = []
 
   //Movement Keys
   w
   a
   s
   d
-
-  textContainer
 
   gameOverText
 
@@ -37,11 +47,14 @@ export default class Level1 extends Phaser.Scene {
   }
 
   create() {
-    this.screenWidth = this.sys.game.canvas.width
-    this.screenHeight = this.sys.game.canvas.height
-    this.add.image(400, 300, 'sky')
+    let sky = this.add.image(400, 300, 'sky')
+    this.physicsWidth = sky.width
+    this.physicsHeight = sky.height
+    this.physics.world.setBounds(0, 0, this.physicsWidth, this.physicsHeight)
 
-    this.textContainer = document.getElementById('text')
+    this.gameWidth = this.sys.game.canvas.width
+    this.gameHeight = this.sys.game.canvas.height
+
     this.liveText = this.add.text(16, 16, `lives: ${this.lives}`, { fontSize: '32px', color: '#000' })
 
     this.createKeys()
@@ -94,14 +107,14 @@ export default class Level1 extends Phaser.Scene {
     if (this.vertical_mover.y < 50) {
       this.vertical_mover.setX(this.vertical_mover.x + (Math.random() > 0.35 ? 30 : -40))
       this.vertical_mover.setVelocity(0, 200)
-    } else if (this.vertical_mover.y > this.screenHeight - 50) {
+    } else if (this.vertical_mover.y > this.physicsHeight - 50) {
       this.vertical_mover.setX(this.vertical_mover.x + (Math.random() > 0.35 ? 30 : -40))
       this.vertical_mover.setVelocity(0, -200)
     }
 
     //Horizontal Mover
 
-    if (this.horizontal_mover.x > this.screenWidth - 70) {
+    if (this.horizontal_mover.x > this.physicsWidth - 70) {
       this.horizontal_mover.setY(this.horizontal_mover.y + (Math.random() > 0.35 ? 30 : -25))
       this.horizontal_mover.setVelocity(-200, 0)
     } else if (this.horizontal_mover.x < 70) {
@@ -186,11 +199,16 @@ export default class Level1 extends Phaser.Scene {
   }
 
   hitObstacle(text, variable) {
-    const para = document.createElement('p')
-    const node = document.createTextNode(text)
-    para.appendChild(node)
-    para.style.color = 'red'
-    this.textContainer.appendChild(para)
+    let number = this.messages.length
+
+    let message = this.add.text(this.physicsWidth + 10, number * 60 + 15, text, {
+      fontSize: '20px',
+      color: '#000',
+      wordWrap: {
+        width: this.gameWidth - this.physicsWidth
+      }
+    })
+    this.messages.push(message)
 
     this.lives -= 1
     this.liveText.setText(`lives: ${this.lives}`)
@@ -199,13 +217,19 @@ export default class Level1 extends Phaser.Scene {
   }
 
   hitHelper(text, variable) {
+    let number = this.messages.length
+
+    let message = this.add.text(this.physicsWidth + 10, number * 60 + 15, text, {
+      fontSize: '20px',
+      color: '#000',
+      wordWrap: {
+        width: this.gameWidth - this.physicsWidth
+      }
+    })
+    this.messages.push(message)
+
     this.player.setTint(0x60ac23)
 
-    const para = document.createElement('p')
-    const node = document.createTextNode(text)
-    para.appendChild(node)
-    para.style.color = 'green'
-    this.textContainer.appendChild(para)
     this.speedUp = 200
     window.setTimeout(() => {
       this.speedUp = 0
