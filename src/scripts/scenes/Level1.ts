@@ -199,16 +199,23 @@ export default class Level1 extends Phaser.Scene {
   }
 
   hitObstacle(text, variable) {
-    let number = this.messages.length
-
-    let message = this.add.text(this.physicsWidth + 10, number * 60 + 15, text, {
+    let message = new Phaser.GameObjects.Text(this, this.physicsWidth + 10, 0, text, {
       fontSize: '20px',
       color: '#000',
       wordWrap: {
         width: this.gameWidth - this.physicsWidth
       }
     })
-    this.messages.push(message)
+
+    this.messages.unshift(message)
+
+    this.messages.forEach((text, index) => {
+      text.setY(index * 60 + 15)
+
+      if (text.displayList == null) {
+        this.add.existing(text)
+      }
+    })
 
     this.lives -= 1
     this.liveText.setText(`lives: ${this.lives}`)
@@ -217,16 +224,23 @@ export default class Level1 extends Phaser.Scene {
   }
 
   hitHelper(text, variable) {
-    let number = this.messages.length
-
-    let message = this.add.text(this.physicsWidth + 10, number * 60 + 15, text, {
+    let message = new Phaser.GameObjects.Text(this, this.physicsWidth + 10, 0, text, {
       fontSize: '20px',
       color: '#000',
       wordWrap: {
         width: this.gameWidth - this.physicsWidth
       }
     })
-    this.messages.push(message)
+
+    this.messages.unshift(message)
+
+    this.messages.forEach((text, index) => {
+      text.setY(index * 60 + 15)
+
+      if (text.displayList == null) {
+        this.add.existing(text)
+      }
+    })
 
     this.player.setTint(0x60ac23)
 
