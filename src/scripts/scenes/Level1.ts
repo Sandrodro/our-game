@@ -24,6 +24,8 @@ export default class Level1 extends Phaser.Scene {
 
   textContainer
 
+  gameOverText
+
   preload() {
     this.load.image('horizontal', 'assets/v-police.png')
     this.load.image('bomb2', 'assets/drone-1.png')
