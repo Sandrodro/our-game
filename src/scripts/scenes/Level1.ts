@@ -61,68 +61,55 @@ export default class Level1 extends Phaser.Scene {
 
     // player
     this.player = this.physics.add.sprite(400, 550, 'dude')
-    this.player.setBounce(1.4)
+    this.player.setBounce(0.2)
     this.player.setCollideWorldBounds(true)
 
     //bomb
     this.createBomb(this.bomb)
     //bomb2
     this.createBomb2(this.bomb2)
+    //vertical mover
+    this.createVertical(this.vertical_mover)
+    //Horizontal Mover
+    this.createHorizontal(this.horizontal_mover)
     //helper
     this.createHelper(this.helper)
-
-    //vertical mover
-    this.vertical_mover = this.createEntity(
-      this.vertical_mover,
-      100,
-      300,
-      'vertical',
-      () => {
-        this.hitObstacle('ვერტიკალურს დაეტაკე!', this.vertical_mover)
-      },
-      0,
-      -200,
-      0.5,
-      true
-    )
-
-    //Horizontal Mover
-    this.horizontal_mover = this.createEntity(
-      this.horizontal_mover,
-      400,
-      100,
-      'horizontal',
-      () => {
-        this.hitObstacle('ჰორიზონტალურს დაეტაკე!', this.horizontal_mover)
-      },
-      200,
-      0,
-      0.5,
-      true
-    )
   }
 
   update() {
+    this.playerMove()
+
     //Vertical Mover
-    if (this.vertical_mover.y < 50) {
-      this.vertical_mover.setX(this.vertical_mover.x + (Math.random() > 0.35 ? 30 : -40))
-      this.vertical_mover.setVelocity(0, 200)
-    } else if (this.vertical_mover.y > this.physicsHeight - 50) {
-      this.vertical_mover.setX(this.vertical_mover.x + (Math.random() > 0.35 ? 30 : -40))
-      this.vertical_mover.setVelocity(0, -200)
+    if (this.vertical_mover) {
+      if (this.vertical_mover.y < 50) {
+        this.vertical_mover.setX(this.vertical_mover.x + (Math.random() > 0.35 ? 30 : -40))
+        this.vertical_mover.setVelocity(0, 200)
+      } else if (this.vertical_mover.y > this.physicsHeight - 50) {
+        this.vertical_mover.setX(this.vertical_mover.x + (Math.random() > 0.35 ? 30 : -40))
+        this.vertical_mover.setVelocity(0, -200)
+      }
     }
 
     //Horizontal Mover
 
-    if (this.horizontal_mover.x > this.physicsWidth - 70) {
-      this.horizontal_mover.setY(this.horizontal_mover.y + (Math.random() > 0.35 ? 30 : -25))
-      this.horizontal_mover.setVelocity(-200, 0)
-    } else if (this.horizontal_mover.x < 70) {
-      this.horizontal_mover.setY(this.horizontal_mover.y + (Math.random() > 0.35 ? 30 : -25))
-      this.horizontal_mover.setVelocity(200, 0)
+    if (this.horizontal_mover) {
+      if (this.horizontal_mover.x > this.physicsWidth - 70) {
+        this.horizontal_mover.setY(this.horizontal_mover.y + (Math.random() > 0.35 ? 30 : -25))
+        this.horizontal_mover.setVelocity(-200, 0)
+      } else if (this.horizontal_mover.x < 70) {
+        this.horizontal_mover.setY(this.horizontal_mover.y + (Math.random() > 0.35 ? 30 : -25))
+        this.horizontal_mover.setVelocity(200, 0)
+      }
     }
+  }
 
-    this.playerMove()
+  createEntity(variable, x, y, imageName, func, xVel, yVel, scale = 1, collide) {
+    variable = this.physics.add.sprite(x, y, imageName).setScale(scale)
+    this.physics.add.collider(this.player, variable, func, null, this)
+    variable.setBounce(1)
+    variable.setCollideWorldBounds(collide)
+    variable.setVelocity(xVel, yVel)
+    return variable
   }
 
   createBomb(variable) {
@@ -182,20 +169,51 @@ export default class Level1 extends Phaser.Scene {
     variable.setTint(0x60ac23)
   }
 
+  createHorizontal(variable) {
+    variable = this.createEntity(
+      variable,
+      400,
+      100,
+      'horizontal',
+      () => {
+        this.hitObstacle('ჰორიზონტალურს დაეტაკე!', variable)
+        variable.destroy()
+        window.setTimeout(() => {
+          this.createHorizontal(variable)
+        }, 2000)
+      },
+      200,
+      0,
+      0.5,
+      true
+    )
+  }
+
+  createVertical(variable) {
+    variable = this.createEntity(
+      variable,
+      100,
+      300,
+      'vertical',
+      () => {
+        this.hitObstacle('ვერტიკალურს დაეტაკე!', variable)
+        variable.destroy()
+        window.setTimeout(() => {
+          this.createVertical(variable)
+        }, 2000)
+      },
+      0,
+      -200,
+      0.5,
+      true
+    )
+  }
+
   createKeys() {
     this.w = this.input.keyboard.addKey('W')
     this.s = this.input.keyboard.addKey('S')
     this.a = this.input.keyboard.addKey('A')
     this.d = this.input.keyboard.addKey('D')
-  }
-
-  createEntity(variable, x, y, imageName, func, xVel, yVel, scale = 1, collide) {
-    variable = this.physics.add.sprite(x, y, imageName).setScale(scale)
-    this.physics.add.collider(this.player, variable, func, null, this)
-    variable.setBounce(1)
-    variable.setCollideWorldBounds(collide)
-    variable.setVelocity(xVel, yVel)
-    return variable
   }
 
   hitObstacle(text, variable) {
