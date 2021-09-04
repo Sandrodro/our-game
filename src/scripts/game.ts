@@ -1,6 +1,8 @@
 import 'phaser'
 import Menu from './scenes/Menu'
 import Level1 from './scenes/Level1'
+import Level2 from './scenes/Level2'
+
 const DEFAULT_WIDTH = 1100
 const DEFAULT_HEIGHT = 600
 
@@ -10,7 +12,7 @@ const config = {
   width: DEFAULT_WIDTH,
   height: DEFAULT_HEIGHT,
   parent: 'phaser-game',
-  scene: [Level1],
+  scene: [Menu, Level1, Level2],
   physics: {
     default: 'arcade'
   }
