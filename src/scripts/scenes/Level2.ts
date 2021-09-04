@@ -4,13 +4,11 @@ import {
   createHelper,
   createHorizontal,
   createVertical,
-  verticalMoverMovement,
-  horizontalMoverMovement,
   createCanvas,
-  createPlayer,
-  createKeys,
-  playerMove
-} from '../objectCreators/objectCreator'
+  createPlayer
+} from '../functions/objectCreator'
+
+import { verticalMoverMovement, horizontalMoverMovement, createKeys, playerMove } from '../functions/movement'
 
 export default class Level1 extends Phaser.Scene {
   constructor() {
