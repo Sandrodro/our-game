@@ -32,6 +32,8 @@ export default class Level1 extends Phaser.Scene {
 
   messages = []
 
+  movers
+
   //Movement Keys
   w
   a
@@ -102,6 +104,7 @@ export default class Level1 extends Phaser.Scene {
       400,
       0.5
     )
+    console.log(this.bomb)
     this.helper = createHelper(this.helper, this, 'bomb', 'რაღაც კარგი მოხდა!', 400, 200, 300, 300, 2)
   }
 
