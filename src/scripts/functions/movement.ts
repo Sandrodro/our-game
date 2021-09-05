@@ -39,24 +39,22 @@ export let playerMove = cl => {
   })
 }
 
-export let verticalMoverMovement = (variable, cl) => {
+export function verticalMoverMovement(variable, cl, spriteHeight) {
   if (variable) {
-    if (variable.y < 50) {
+    if (variable.y < (spriteHeight * 2) / 3) {
       variable.setX(variable.x + (Math.random() > 0.35 ? 30 : -40))
-      variable.setVelocity(0, 200)
-    } else if (variable.y > cl.physicsHeight - 50) {
+    } else if (variable.y > cl.physicsHeight - (spriteHeight * 2) / 3) {
       variable.setX(variable.x + (Math.random() > 0.35 ? 30 : -40))
-      variable.setVelocity(0, -200)
     }
   }
 }
 
-export let horizontalMoverMovement = (variable, cl) => {
+export let horizontalMoverMovement = (variable, cl, spriteWidth) => {
   if (variable) {
-    if (variable.x > cl.physicsWidth - 70) {
+    if (variable.x > cl.physicsWidth - (spriteWidth * 2) / 3) {
       variable.setY(variable.y + (Math.random() > 0.35 ? 30 : -25))
       variable.setVelocity(-200, 0)
-    } else if (variable.x < 70) {
+    } else if (variable.x < (spriteWidth * 2) / 3) {
       variable.setY(variable.y + (Math.random() > 0.35 ? 30 : -25))
       variable.setVelocity(200, 0)
     }

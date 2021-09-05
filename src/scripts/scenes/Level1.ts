@@ -1,12 +1,4 @@
-import {
-  createBomb,
-  createBomb2,
-  createHelper,
-  createHorizontal,
-  createVertical,
-  createCanvas,
-  createPlayer
-} from '../functions/objectCreator'
+import { createBomb, createHelper, createCanvas, createPlayer } from '../functions/objectCreator'
 
 import { verticalMoverMovement, horizontalMoverMovement, createKeys, playerMove } from '../functions/movement'
 
@@ -40,6 +32,8 @@ export default class Level1 extends Phaser.Scene {
 
   messages = []
 
+  movers
+
   //Movement Keys
   w
   a
@@ -61,23 +55,62 @@ export default class Level1 extends Phaser.Scene {
     createKeys(this)
 
     // player
-    createPlayer(this)
+    this.player = createPlayer(this)
+    // bomb
+    this.bomb = createBomb(
+      this.bomb,
+      this,
+      'bomb',
+      'ბომბს დაეტაკე!',
+      Math.random() * 500,
+      Math.random() * 400,
+      400,
+      400,
+      2
+    )
 
-    //bomb
-    createBomb(this.bomb, this, 'bomb', 'ბომბს დაეტაკე!')
-    //bomb2
-    createBomb2(this.bomb2, this, 'bomb2', 'მეორე ბომბს დაეტაკე!')
-    //vertical mover
-    createVertical(this.vertical_mover, this, 'vertical', 'ვერტიკალურს დაეტაკე!')
-    //Horizontal Mover
-    createHorizontal(this.horizontal_mover, this, 'horizontal', 'ჰორიზონტალურს დაეტაკე!')
-    //helper
-    createHelper(this.helper, this, 'bomb', 'რაღაც კარგი მოხდა!')
+    this.bomb2 = createBomb(
+      this.bomb2,
+      this,
+      'bomb2',
+      'მეორე ბომბს დაეტაკე!',
+      Math.random() * 500 + 200,
+      Math.random() * 200,
+      -400,
+      -500,
+      1
+    )
+
+    this.horizontal_mover = createBomb(
+      this.horizontal_mover,
+      this,
+      'horizontal',
+      'ჰორიზონტალურს დაეტაკე!',
+      50,
+      50,
+      400,
+      0,
+      0.5
+    )
+
+    this.vertical_mover = createBomb(
+      this.vertical_mover,
+      this,
+      'vertical',
+      'ვერტიკალურს დაეტაკე!',
+      70,
+      500,
+      0,
+      400,
+      0.5
+    )
+    console.log(this.bomb)
+    this.helper = createHelper(this.helper, this, 'bomb', 'რაღაც კარგი მოხდა!', 400, 200, 300, 300, 2)
   }
 
   update() {
     playerMove(this)
-    verticalMoverMovement(this.vertical_mover, this)
-    horizontalMoverMovement(this.vertical_mover, this)
+    verticalMoverMovement(this.vertical_mover, this, this.vertical_mover.displayHeight)
+    horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)
   }
 }

@@ -1,121 +1,48 @@
-export let createEntity = (physics, player, variable, x, y, imageName, func, xVel, yVel, scale = 1, collide) => {
-  variable = physics.add.sprite(x, y, imageName).setScale(scale)
-  physics.add.collider(player, variable, func, null, this)
+export let createBomb = (variable, cl, image, text, x, y, xVel, yVel, scale = 1, collide = true) => {
+  variable = cl.physics.add.sprite(x, y, image).setScale(scale)
+  cl.physics.add.collider(
+    cl.player,
+    variable,
+    () => {
+      hitObstacle(text, cl)
+      variable.destroy()
+      window.setTimeout(() => {
+        variable = createBomb(variable, cl, image, text, x, y, xVel, yVel, scale, collide)
+      }, 2000)
+    },
+    null,
+    cl
+  )
   variable.setBounce(1)
   variable.setCollideWorldBounds(collide)
   variable.setVelocity(xVel, yVel)
+  variable.setActive(true)
+  variable.setVisible(true)
   return variable
 }
 
-export let createBomb = (variable, cl, image, text) => {
-  variable = createEntity(
-    cl.physics,
+export let createHelper = (variable, cl, image, text, x, y, xVel, yVel, scale = 1, collide = true) => {
+  variable = cl.physics.add.sprite(x, y, image).setScale(scale)
+  cl.physics.add.collider(
     cl.player,
     variable,
-    Math.random() * 500,
-    Math.random() * 40,
-    image,
-    () => {
-      hitObstacle(text, cl)
-      variable.destroy()
-      window.setTimeout(() => {
-        createBomb(variable, cl, image, text)
-      }, 2000)
-    },
-    400,
-    Math.random() * 180,
-    2,
-    true
-  )
-}
-
-export let createBomb2 = (variable, cl, image, text) => {
-  variable = createEntity(
-    cl.physics,
-    cl.player,
-    variable,
-    Math.random() * 300 + 500,
-    Math.random() * 40,
-    image,
-    () => {
-      hitObstacle(text, cl)
-      variable.destroy()
-      window.setTimeout(() => {
-        createBomb2(variable, cl, image, text)
-      }, 2000)
-    },
-    -300,
-    Math.random() * 180,
-    1,
-    true
-  )
-}
-
-export let createHelper = (variable, cl, image, text) => {
-  variable = createEntity(
-    cl.physics,
-    cl.player,
-    variable,
-    400,
-    100,
-    image,
     () => {
       hitHelper(text, cl)
       variable.destroy()
       window.setTimeout(() => {
-        createHelper(variable, cl, image, text)
+        variable = createHelper(variable, cl, image, text, x, y, xVel, yVel, scale, collide)
       }, 2000)
     },
-    400,
-    80,
-    2,
-    true
+    null,
+    cl
   )
+  variable.setBounce(1)
+  variable.setCollideWorldBounds(collide)
+  variable.setVelocity(xVel, yVel)
   variable.setTint(0x60ac23)
-}
-
-export let createHorizontal = (variable, cl, image, text) => {
-  variable = createEntity(
-    cl.physics,
-    cl.player,
-    variable,
-    400,
-    100,
-    image,
-    () => {
-      hitObstacle(text, cl)
-      variable.destroy()
-      window.setTimeout(() => {
-        createHorizontal(variable, cl, image, text)
-      }, 2000)
-    },
-    200,
-    0,
-    0.5,
-    true
-  )
-}
-
-export let createVertical = (variable, cl, image, text) => {
-  variable = createEntity(
-    cl.physics,
-    cl.player,
-    variable,
-    100,
-    300,
-    image,
-    () => {
-      hitObstacle(text, cl)
-      variable.destroy()
-      window.setTimeout(() => {
-        createVertical(variable, cl, image, text)
-      }, 2000)
-    },
-    0,
-    -200,
-    0.5,
-    true
-  )
+  variable.setActive(true)
+  variable.setVisible(true)
+  return variable
 }
 
 export let createCanvas = (cl, imageName) => {
@@ -134,6 +61,7 @@ export let createPlayer = cl => {
   cl.player = cl.physics.add.sprite(400, 550, 'dude')
   cl.player.setBounce(0.2)
   cl.player.setCollideWorldBounds(true)
+  return cl.player
 }
 
 export let hitHelper = (text, cl) => {

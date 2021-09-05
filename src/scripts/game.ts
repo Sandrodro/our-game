@@ -12,7 +12,7 @@ const config = {
   width: DEFAULT_WIDTH,
   height: DEFAULT_HEIGHT,
   parent: 'phaser-game',
-  scene: [Menu, Level1, Level2],
+  scene: [Level1],
   physics: {
     default: 'arcade'
   }
