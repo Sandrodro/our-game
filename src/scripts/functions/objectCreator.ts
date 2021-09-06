@@ -1,26 +1,28 @@
 export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1, collide = true) => {
   if (group.getLength() == 0) {
     variable = group.get(x, y, image)
-    cl.physics.add.collider(
-      cl.player,
-      group,
-      () => {
-        hitObstacle(text, cl)
-        variable.setActive(false)
-        variable.setVisible(false)
-        window.setTimeout(() => {
-          createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale, collide)
-        }, 2000)
-      },
-      null,
-      cl
-    )
   }
+  let collider = cl.physics.add.overlap(
+    cl.player,
+    group,
+    () => {
+      console.log(group.getLength())
+      variable.setActive(false)
+      variable.setVisible(false)
+      collider.destroy()
+      hitObstacle(text, cl)
+      window.setTimeout(() => {
+        createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale, collide)
+      }, 2000)
+    },
+    null,
+    cl
+  )
   variable.setX(x)
   variable.setY(y)
   variable.setActive(true)
   variable.setVisible(true)
-  variable.setScale(scale).setAlpha(1)
+  variable.setScale(scale)
   variable.setBounce(1)
   variable.setCollideWorldBounds(collide)
   variable.setVelocity(xVel, yVel)
@@ -30,30 +32,32 @@ export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, sca
 export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1, collide = true) => {
   if (group.getLength() == 0) {
     variable = group.get(x, y, image)
-    cl.physics.add.collider(
-      cl.player,
-      group,
-      () => {
-        hitObstacle(text, cl)
-        variable.setActive(false)
-        variable.setVisible(false)
-        window.setTimeout(() => {
-          createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale, collide)
-        }, 2000)
-      },
-      null,
-      cl
-    )
   }
+  let collider = cl.physics.add.overlap(
+    cl.player,
+    group,
+    () => {
+      console.log(group.getLength())
+      variable.setActive(false)
+      variable.setVisible(false)
+      collider.destroy()
+      hitHelper(text, cl)
+      window.setTimeout(() => {
+        createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale, collide)
+      }, 2000)
+    },
+    null,
+    cl
+  )
   variable.setX(x)
   variable.setY(y)
   variable.setActive(true)
   variable.setVisible(true)
-  variable.setScale(scale).setAlpha(1)
+  variable.setScale(scale)
   variable.setBounce(1)
+  variable.setTint(0x60ac23)
   variable.setCollideWorldBounds(collide)
   variable.setVelocity(xVel, yVel)
-  variable.setTint(0x60ac23)
   return variable
 }
 

@@ -80,7 +80,6 @@ export default class Level1 extends Phaser.Scene {
       400,
       2
     )
-
     this.bomb2Group = this.physics.add.group({
       defaultKey: 'bomb2'
     })
@@ -136,7 +135,11 @@ export default class Level1 extends Phaser.Scene {
 
   update() {
     // playerMove(this)
-    this.physics.moveTo(this.player, this.input.x, this.input.y, 400)
+    if (this.player.getBounds().contains(this.input.x, this.input.y)) {
+      this.player.setVelocity(0, 0)
+    } else {
+      this.physics.moveTo(this.player, this.input.x, this.input.y, 400)
+    }
     verticalMoverMovement(this.vertical_mover, this, this.vertical_mover.displayHeight)
     horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)
   }
