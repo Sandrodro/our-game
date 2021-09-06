@@ -12,9 +12,16 @@ export default class Level1 extends Phaser.Scene {
 
   //enemies
   bomb
+  bombGroup
+
   bomb2
+  bomb2Group
+
   horizontal_mover
+  horizontal_moverGroup
+
   vertical_mover
+  vertical_moverGroup
 
   //bonuses
   helper
@@ -57,7 +64,11 @@ export default class Level1 extends Phaser.Scene {
     // player
     this.player = createPlayer(this)
     // bomb
+    this.bombGroup = this.physics.add.group({
+      defaultKey: 'bomb'
+    })
     this.bomb = createBomb(
+      this.bombGroup,
       this.bomb,
       this,
       'bomb',
@@ -69,7 +80,11 @@ export default class Level1 extends Phaser.Scene {
       2
     )
 
+    this.bomb2Group = this.physics.add.group({
+      defaultKey: 'bomb2'
+    })
     this.bomb2 = createBomb(
+      this.bomb2Group,
       this.bomb2,
       this,
       'bomb2',
@@ -81,7 +96,11 @@ export default class Level1 extends Phaser.Scene {
       1
     )
 
+    this.horizontal_moverGroup = this.physics.add.group({
+      defaultKey: 'horizontal'
+    })
     this.horizontal_mover = createBomb(
+      this.horizontal_moverGroup,
       this.horizontal_mover,
       this,
       'horizontal',
@@ -93,7 +112,11 @@ export default class Level1 extends Phaser.Scene {
       0.5
     )
 
+    this.vertical_moverGroup = this.physics.add.group({
+      defaultKey: 'vertical'
+    })
     this.vertical_mover = createBomb(
+      this.vertical_moverGroup,
       this.vertical_mover,
       this,
       'vertical',
@@ -104,7 +127,6 @@ export default class Level1 extends Phaser.Scene {
       400,
       0.5
     )
-    console.log(this.bomb)
     this.helper = createHelper(this.helper, this, 'bomb', 'რაღაც კარგი მოხდა!', 400, 200, 300, 300, 2)
   }
 
