@@ -78,7 +78,7 @@ export default class Level1 extends Phaser.Scene {
       Math.random() * 400,
       400,
       400,
-      2
+      2.5
     )
     this.bomb2Group = this.physics.add.group({
       defaultKey: 'bomb2'
@@ -93,7 +93,7 @@ export default class Level1 extends Phaser.Scene {
       Math.random() * 200,
       -400,
       -500,
-      1
+      1.1
     )
 
     this.horizontal_moverGroup = this.physics.add.group({
@@ -109,7 +109,7 @@ export default class Level1 extends Phaser.Scene {
       50,
       400,
       0,
-      0.5
+      0.6
     )
 
     this.vertical_moverGroup = this.physics.add.group({
@@ -125,7 +125,7 @@ export default class Level1 extends Phaser.Scene {
       500,
       0,
       400,
-      0.5
+      0.6
     )
     this.helperGroup = this.physics.add.group({
       defaultKey: 'vertical'
@@ -138,7 +138,7 @@ export default class Level1 extends Phaser.Scene {
     if (this.player.getBounds().contains(this.input.x, this.input.y)) {
       this.player.setVelocity(0, 0)
     } else {
-      this.physics.moveTo(this.player, this.input.x, this.input.y, 400)
+      this.physics.moveTo(this.player, this.input.x, this.input.y, 400 + this.speedUp)
     }
     verticalMoverMovement(this.vertical_mover, this, this.vertical_mover.displayHeight)
     horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)
