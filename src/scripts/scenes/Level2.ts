@@ -24,6 +24,7 @@ export default class Level1 extends Phaser.Scene {
   vertical_moverGroup
 
   //bonuses
+  helperGroup
   helper
 
   //live n
@@ -79,7 +80,6 @@ export default class Level1 extends Phaser.Scene {
       400,
       2
     )
-
     this.bomb2Group = this.physics.add.group({
       defaultKey: 'bomb2'
     })
@@ -127,11 +127,19 @@ export default class Level1 extends Phaser.Scene {
       400,
       0.5
     )
-    this.helper = createHelper(this.helper, this, 'bomb', 'რაღაც კარგი მოხდა!', 400, 200, 300, 300, 2)
+    this.helperGroup = this.physics.add.group({
+      defaultKey: 'vertical'
+    })
+    this.helper = createHelper(this.helperGroup, this.helper, this, 'bomb', 'რაღაც კარგი მოხდა!', 400, 200, 300, 300, 2)
   }
 
   update() {
-    playerMove(this)
+    // playerMove(this)
+    if (this.player.getBounds().contains(this.input.x, this.input.y)) {
+      this.player.setVelocity(0, 0)
+    } else {
+      this.physics.moveTo(this.player, this.input.x, this.input.y, 400)
+    }
     verticalMoverMovement(this.vertical_mover, this, this.vertical_mover.displayHeight)
     horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)
   }

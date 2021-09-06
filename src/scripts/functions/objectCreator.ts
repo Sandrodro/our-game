@@ -1,4 +1,4 @@
-export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1, collide = true) => {
+export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1) => {
   if (group.getLength() == 0) {
     variable = group.get(x, y, image)
   }
@@ -6,13 +6,12 @@ export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, sca
     cl.player,
     group,
     () => {
-      console.log(group.getLength())
       variable.setActive(false)
       variable.setVisible(false)
       collider.destroy()
       hitObstacle(text, cl)
       window.setTimeout(() => {
-        createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale, collide)
+        createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale)
       }, 2000)
     },
     null,
@@ -24,12 +23,12 @@ export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, sca
   variable.setVisible(true)
   variable.setScale(scale)
   variable.setBounce(1)
-  variable.setCollideWorldBounds(collide)
+  variable.setCollideWorldBounds(true)
   variable.setVelocity(xVel, yVel)
   return variable
 }
 
-export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1, collide = true) => {
+export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1) => {
   if (group.getLength() == 0) {
     variable = group.get(x, y, image)
   }
@@ -37,13 +36,12 @@ export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, s
     cl.player,
     group,
     () => {
-      console.log(group.getLength())
       variable.setActive(false)
       variable.setVisible(false)
       collider.destroy()
       hitHelper(text, cl)
       window.setTimeout(() => {
-        createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale, collide)
+        createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale)
       }, 2000)
     },
     null,
@@ -56,7 +54,7 @@ export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, s
   variable.setScale(scale)
   variable.setBounce(1)
   variable.setTint(0x60ac23)
-  variable.setCollideWorldBounds(collide)
+  variable.setCollideWorldBounds(true)
   variable.setVelocity(xVel, yVel)
   return variable
 }
