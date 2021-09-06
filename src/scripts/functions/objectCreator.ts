@@ -27,27 +27,33 @@ export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, sca
   return variable
 }
 
-export let createHelper = (variable, cl, image, text, x, y, xVel, yVel, scale = 1, collide = true) => {
-  variable = cl.physics.add.sprite(x, y, image).setScale(scale)
-  cl.physics.add.collider(
-    cl.player,
-    variable,
-    () => {
-      hitHelper(text, cl)
-      variable.destroy()
-      window.setTimeout(() => {
-        variable = createHelper(variable, cl, image, text, x, y, xVel, yVel, scale, collide)
-      }, 2000)
-    },
-    null,
-    cl
-  )
+export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1, collide = true) => {
+  if (group.getLength() == 0) {
+    variable = group.get(x, y, image)
+    cl.physics.add.collider(
+      cl.player,
+      group,
+      () => {
+        hitObstacle(text, cl)
+        variable.setActive(false)
+        variable.setVisible(false)
+        window.setTimeout(() => {
+          createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale, collide)
+        }, 2000)
+      },
+      null,
+      cl
+    )
+  }
+  variable.setX(x)
+  variable.setY(y)
+  variable.setActive(true)
+  variable.setVisible(true)
+  variable.setScale(scale).setAlpha(1)
   variable.setBounce(1)
   variable.setCollideWorldBounds(collide)
   variable.setVelocity(xVel, yVel)
   variable.setTint(0x60ac23)
-  variable.setActive(true)
-  variable.setVisible(true)
   return variable
 }
 
