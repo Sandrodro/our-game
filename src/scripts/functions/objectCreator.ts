@@ -23,6 +23,7 @@ export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, sca
   variable.setY(y)
   variable.setActive(true)
   variable.setVisible(true)
+  variable.setTint(0xff0000)
   variable.setScale(scale)
   variable.setBounce(1)
   variable.setCollideWorldBounds(true)
@@ -118,7 +119,10 @@ export let createCanvas = (cl, imageName) => {
   cl.gameHeight = cl.sys.game.canvas.height
 
   cl.liveText = cl.add.text(16, 16, `lives: ${cl.lives}`, { fontSize: '32px', color: '#000' })
-  cl.bonusText = cl.add.text(16, 80, `Bonus Collected: ${cl.bonusNumber}`, { fontSize: '32px', color: '#000' })
+  cl.bonusText = cl.add.text(16, 80, `Bonus Collected: ${cl.bonusNumber} / ${cl.bonusRequired}`, {
+    fontSize: '32px',
+    color: '#000'
+  })
 }
 
 export let createPlayer = cl => {
@@ -148,7 +152,12 @@ export let hitHelper = (text, cl) => {
   })
 
   cl.bonusNumber += 1
-  cl.bonusText.setText(`Bonus Collected: ${cl.bonusNumber}`)
+  cl.bonusText.setText(`Bonus Collected: ${cl.bonusNumber} / ${cl.bonusRequired}`)
+
+  cl.player.setTint(0x60ac23)
+  window.setTimeout(() => {
+    cl.player.clearTint()
+  }, 500)
 }
 
 export let hitObstacle = (text, cl) => {
@@ -174,4 +183,7 @@ export let hitObstacle = (text, cl) => {
   cl.liveText.setText(`lives: ${cl.lives}`)
 
   cl.player.setTint(0xff0000)
+  window.setTimeout(() => {
+    cl.player.clearTint()
+  }, 500)
 }
