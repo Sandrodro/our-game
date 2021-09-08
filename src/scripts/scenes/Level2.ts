@@ -1,6 +1,6 @@
-import { createBomb, createHelper, createCanvas, createPlayer } from '../functions/objectCreator'
+import { createBomb, createHelper, createCanvas, createPlayer, createPowerUp } from '../functions/objectCreator'
 
-import { verticalMoverMovement, horizontalMoverMovement, createKeys, playerMove } from '../functions/movement'
+import { verticalMoverMovement, horizontalMoverMovement, createKeys } from '../functions/movement'
 
 export default class Level1 extends Phaser.Scene {
   constructor() {
@@ -27,9 +27,21 @@ export default class Level1 extends Phaser.Scene {
   helperGroup
   helper
 
+  //Power Ups
+
+  speedPowerUp
+  livePowerUp
+  shieldPowerUp
+
   //live n
   lives = 3
   liveText
+
+  bonusNumber = 0
+  bonusText
+
+  bonusRequired = 2
+
   speedUp = 0
 
   physicsWidth
@@ -50,6 +62,7 @@ export default class Level1 extends Phaser.Scene {
 
   preload() {
     this.load.image('horizontal', 'assets/v-police.png')
+    this.load.image('powerup', 'assets/enemy-explosion-1.png')
     this.load.image('bomb2', 'assets/drone-1.png')
     this.load.image('vertical', 'assets/v-red.png')
     this.load.image('sky', 'assets/sky.png')
@@ -68,6 +81,7 @@ export default class Level1 extends Phaser.Scene {
     this.bombGroup = this.physics.add.group({
       defaultKey: 'bomb'
     })
+
     this.bomb = createBomb(
       this.bombGroup,
       this.bomb,
@@ -78,7 +92,7 @@ export default class Level1 extends Phaser.Scene {
       Math.random() * 400,
       400,
       400,
-      2
+      2.5
     )
     this.bomb2Group = this.physics.add.group({
       defaultKey: 'bomb2'
@@ -93,7 +107,7 @@ export default class Level1 extends Phaser.Scene {
       Math.random() * 200,
       -400,
       -500,
-      1
+      1.1
     )
 
     this.horizontal_moverGroup = this.physics.add.group({
@@ -109,7 +123,7 @@ export default class Level1 extends Phaser.Scene {
       50,
       400,
       0,
-      0.5
+      0.6
     )
 
     this.vertical_moverGroup = this.physics.add.group({
@@ -125,22 +139,29 @@ export default class Level1 extends Phaser.Scene {
       500,
       0,
       400,
-      0.5
+      0.6
     )
     this.helperGroup = this.physics.add.group({
       defaultKey: 'vertical'
     })
     this.helper = createHelper(this.helperGroup, this.helper, this, 'bomb', 'რაღაც კარგი მოხდა!', 400, 200, 300, 300, 2)
+    this.speedPowerUp = createPowerUp(this, 'inv')
   }
 
   update() {
-    // playerMove(this)
     if (this.player.getBounds().contains(this.input.x, this.input.y)) {
       this.player.setVelocity(0, 0)
     } else {
-      this.physics.moveTo(this.player, this.input.x, this.input.y, 400)
+      this.physics.moveTo(this.player, this.input.x, this.input.y, 430 + this.speedUp)
     }
+
     verticalMoverMovement(this.vertical_mover, this, this.vertical_mover.displayHeight)
     horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)
+
+    if (this.bonusNumber == this.bonusRequired) {
+      this.scene.start('Win1', { messages: this.messages })
+    } else if (this.lives == 0) {
+      this.scene.start('Lose1', { messages: this.messages })
+    }
   }
 }
