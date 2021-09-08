@@ -63,6 +63,51 @@ export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, s
   return variable
 }
 
+export let createPowerUp = (cl, type) => {
+  let tint
+  type == 'speed' ? (tint = 0xde3eed) : type == 'lives' ? (tint = 0x6a3eed) : (tint = 0x3e8ded)
+
+  let powerUp = cl.physics.add.sprite(
+    (Math.random() * cl.sys.game.canvas.width * 2) / 3,
+    (Math.random() * cl.sys.game.canvas.height * 2) / 3,
+    'powerup'
+  )
+  powerUp.setTint(tint)
+  let collider = cl.physics.add.overlap(
+    cl.player,
+    powerUp,
+    () => {
+      if (type == 'speed') {
+        cl.speedUp = 100
+        cl.player.setTint(tint)
+        window.setTimeout(() => {
+          cl.speedUp = 0
+          cl.player.clearTint()
+        }, 2000)
+      } else if (type == 'lives') {
+        cl.lives += 1
+        cl.liveText.setText(`lives: ${cl.lives}`)
+      } else {
+        cl.player.body.checkCollision.none = true
+        cl.player.setTint(tint)
+        window.setTimeout(() => {
+          console.log(cl.player)
+          cl.player.body.checkCollision.none = false
+          cl.player.clearTint()
+        }, 2000)
+      }
+
+      powerUp.setActive(false)
+      powerUp.setVisible(false)
+      collider.destroy()
+    },
+    null,
+    cl
+  )
+
+  return powerUp
+}
+
 export let createCanvas = (cl, imageName) => {
   let sky = cl.add.image(400, 300, imageName)
   cl.physicsWidth = sky.width
