@@ -11,7 +11,9 @@ export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, sca
       collider.destroy()
       hitObstacle(text, cl)
       window.setTimeout(() => {
-        createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale)
+        if (cl.bonusNumber != cl.bonusRequired) {
+          createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale)
+        }
       }, 2000)
     },
     null,
@@ -41,7 +43,9 @@ export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, s
       collider.destroy()
       hitHelper(text, cl)
       window.setTimeout(() => {
-        createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale)
+        if (cl.bonusNumber != cl.bonusRequired) {
+          createHelper(group, variable, cl, image, text, x, y, xVel, yVel, scale)
+        }
       }, 2000)
     },
     null,
@@ -69,6 +73,7 @@ export let createCanvas = (cl, imageName) => {
   cl.gameHeight = cl.sys.game.canvas.height
 
   cl.liveText = cl.add.text(16, 16, `lives: ${cl.lives}`, { fontSize: '32px', color: '#000' })
+  cl.bonusText = cl.add.text(16, 80, `Bonus Collected: ${cl.bonusNumber}`, { fontSize: '32px', color: '#000' })
 }
 
 export let createPlayer = cl => {
@@ -81,7 +86,7 @@ export let createPlayer = cl => {
 export let hitHelper = (text, cl) => {
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, text, {
     fontSize: '20px',
-    color: '#000',
+    color: '#70D430',
     wordWrap: {
       width: cl.gameWidth - cl.physicsWidth
     }
@@ -97,18 +102,14 @@ export let hitHelper = (text, cl) => {
     }
   })
 
-  cl.player.setTint(0x60ac23)
-
-  cl.speedUp = 200
-  window.setTimeout(() => {
-    cl.speedUp = 0
-  }, 3000)
+  cl.bonusNumber += 1
+  cl.bonusText.setText(`Bonus Collected: ${cl.bonusNumber}`)
 }
 
 export let hitObstacle = (text, cl) => {
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, text, {
     fontSize: '20px',
-    color: '#000',
+    color: '#D54F32',
     wordWrap: {
       width: cl.gameWidth - cl.physicsWidth
     }

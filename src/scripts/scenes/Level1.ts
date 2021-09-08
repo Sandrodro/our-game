@@ -30,6 +30,12 @@ export default class Level1 extends Phaser.Scene {
   //live n
   lives = 3
   liveText
+
+  bonusNumber = 0
+  bonusText
+
+  bonusRequired = 2
+
   speedUp = 0
 
   physicsWidth
@@ -134,13 +140,21 @@ export default class Level1 extends Phaser.Scene {
   }
 
   update() {
-    // playerMove(this)
     if (this.player.getBounds().contains(this.input.x, this.input.y)) {
       this.player.setVelocity(0, 0)
     } else {
-      this.physics.moveTo(this.player, this.input.x, this.input.y, 400 + this.speedUp)
+      this.physics.moveTo(this.player, this.input.x, this.input.y, 430 + this.speedUp)
     }
+
+    // this.player.setX(this.input.x)
+    // this.player.setY(this.input.y)
     verticalMoverMovement(this.vertical_mover, this, this.vertical_mover.displayHeight)
     horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)
+
+    if (this.bonusNumber == this.bonusRequired) {
+      this.scene.start('Win1', { messages: this.messages })
+    } else if (this.lives == 0) {
+      this.scene.start('Lose1', { messages: this.messages })
+    }
   }
 }
