@@ -1,6 +1,6 @@
 import { createBomb, createHelper, createCanvas, createPlayer, createPowerUp } from '../functions/objectCreator'
 
-import { verticalMoverMovement, horizontalMoverMovement, createKeys } from '../functions/movement'
+import { verticalMoverMovement, horizontalMoverMovement, createKeys, playerMove } from '../functions/movement'
 
 export default class Level1 extends Phaser.Scene {
   constructor() {
@@ -149,11 +149,12 @@ export default class Level1 extends Phaser.Scene {
   }
 
   update() {
-    if (this.player.getBounds().contains(this.input.x, this.input.y)) {
-      this.player.setVelocity(0, 0)
-    } else {
-      this.physics.moveTo(this.player, this.input.x, this.input.y, 430 + this.speedUp)
-    }
+    playerMove(this)
+    // if (this.player.getBounds().contains(this.input.x, this.input.y)) {
+    //   this.player.setVelocity(0, 0)
+    // } else {
+    //   this.physics.moveTo(this.player, this.input.x, this.input.y, 430 + this.speedUp)
+    // }
 
     verticalMoverMovement(this.vertical_mover, this, this.vertical_mover.displayHeight)
     horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)

@@ -7,7 +7,7 @@ export let createKeys = cl => {
 
 export let playerMove = cl => {
   cl.w.on('down', e => {
-    cl.player.setVelocityY(-200 - cl.speedUp)
+    cl.player.setVelocityY(-300 - cl.speedUp)
   })
 
   cl.w.on('up', e => {
@@ -15,7 +15,7 @@ export let playerMove = cl => {
   })
 
   cl.s.on('down', e => {
-    cl.player.setVelocityY(200 + cl.speedUp)
+    cl.player.setVelocityY(300 + cl.speedUp)
   })
 
   cl.s.on('up', e => {
@@ -23,7 +23,7 @@ export let playerMove = cl => {
   })
 
   cl.a.on('down', e => {
-    cl.player.setVelocityX(-200 - cl.speedUp)
+    cl.player.setVelocityX(-300 - cl.speedUp)
   })
 
   cl.a.on('up', e => {
@@ -31,7 +31,7 @@ export let playerMove = cl => {
   })
 
   cl.d.on('down', e => {
-    cl.player.setVelocityX(200 + cl.speedUp)
+    cl.player.setVelocityX(300 + cl.speedUp)
   })
 
   cl.d.on('up', e => {
