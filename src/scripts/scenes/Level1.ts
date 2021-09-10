@@ -145,7 +145,9 @@ export default class Level1 extends Phaser.Scene {
       defaultKey: 'vertical'
     })
     this.helper = createHelper(this.helperGroup, this.helper, this, 'bomb', 'რაღაც კარგი მოხდა!', 400, 200, 300, 300, 2)
-    this.speedPowerUp = createPowerUp(this, 'inv')
+    let types = ['speed', 'lives', 'shield']
+    let randomPowerUp = Math.floor(Math.random() * 3)
+    this.speedPowerUp = createPowerUp(this, types[randomPowerUp])
   }
 
   update() {

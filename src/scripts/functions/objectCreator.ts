@@ -66,6 +66,7 @@ export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, s
 
 export let createPowerUp = (cl, type) => {
   let tint
+  let types = ['speed', 'lives', 'shield']
   type == 'speed' ? (tint = 0xde3eed) : type == 'lives' ? (tint = 0x6a3eed) : (tint = 0x3e8ded)
 
   let powerUp = cl.physics.add.sprite(
@@ -79,12 +80,12 @@ export let createPowerUp = (cl, type) => {
     powerUp,
     () => {
       if (type == 'speed') {
-        cl.speedUp = 100
+        cl.speedUp = 200
         cl.player.setTint(tint)
         window.setTimeout(() => {
           cl.speedUp = 0
           cl.player.clearTint()
-        }, 2000)
+        }, 2500)
       } else if (type == 'lives') {
         cl.lives += 1
         cl.liveText.setText(`lives: ${cl.lives}`)
@@ -101,6 +102,10 @@ export let createPowerUp = (cl, type) => {
       powerUp.setActive(false)
       powerUp.setVisible(false)
       collider.destroy()
+      window.setTimeout(() => {
+        let randomPowerUp = Math.floor(Math.random() * 3)
+        createPowerUp(cl, types[randomPowerUp])
+      }, 5000)
     },
     null,
     cl
