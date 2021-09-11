@@ -21,6 +21,7 @@ export default class Lose1 extends Phaser.Scene {
     this.displayMessages.forEach((message, index) => {
       this.add.text(this.sys.game.canvas.width / 2 - message.width / 2, 150 + index * 40, message._text, {
         fontSize: '28px',
+        fontFamily: 'BPG_Banner_QuadroSquare',
         color: message.style.color
       })
     })

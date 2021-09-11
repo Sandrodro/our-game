@@ -140,7 +140,8 @@ export let createPlayer = cl => {
 export let hitHelper = (text, cl) => {
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, text, {
     fontSize: '20px',
-    color: '#70D430',
+    color: '#068866',
+    fontFamily: 'BPG_Banner_QuadroSquare',
     wordWrap: {
       width: cl.gameWidth - cl.physicsWidth
     }
@@ -159,7 +160,7 @@ export let hitHelper = (text, cl) => {
   cl.bonusNumber += 1
   cl.bonusText.setText(`Bonus Collected: ${cl.bonusNumber} / ${cl.bonusRequired}`)
 
-  cl.player.setTint(0x60ac23)
+  cl.player.setTint(0x068866)
   window.setTimeout(() => {
     cl.player.clearTint()
   }, 500)
@@ -168,7 +169,8 @@ export let hitHelper = (text, cl) => {
 export let hitObstacle = (text, cl) => {
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, text, {
     fontSize: '20px',
-    color: '#D54F32',
+    fontFamily: 'BPG_Banner_QuadroSquare',
+    color: '#ff3d32',
     wordWrap: {
       width: cl.gameWidth - cl.physicsWidth
     }
@@ -187,7 +189,7 @@ export let hitObstacle = (text, cl) => {
   cl.lives -= 1
   cl.liveText.setText(`lives: ${cl.lives}`)
 
-  cl.player.setTint(0xff0000)
+  cl.player.setTint(0xff3d32)
   window.setTimeout(() => {
     cl.player.clearTint()
   }, 500)
