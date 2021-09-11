@@ -117,7 +117,8 @@ export let createPowerUp = (cl, type) => {
 }
 
 export let createCanvas = (cl, imageName) => {
-  let sky = cl.add.image(400, 300, imageName)
+  // let sky = cl.add.image(400, 300, imageName)
+  let sky = cl.add.tileSprite(400, 300, 800, 600, imageName)
   cl.physicsWidth = sky.width
   cl.physicsHeight = sky.height
   cl.physics.world.setBounds(0, 0, cl.physicsWidth, cl.physicsHeight)
@@ -130,6 +131,8 @@ export let createCanvas = (cl, imageName) => {
     fontSize: '32px',
     color: '#000'
   })
+
+  return sky
 }
 
 export let createPlayer = cl => {
