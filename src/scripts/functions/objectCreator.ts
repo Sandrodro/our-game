@@ -1,3 +1,5 @@
+import { jobText, apartmentText } from '../text'
+
 export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1) => {
   if (group.getLength() == 0) {
     variable = group.get(x, y, image)
@@ -138,8 +140,9 @@ export let createPlayer = cl => {
 }
 
 export let hitHelper = (text, cl) => {
-  let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, text, {
-    fontSize: '20px',
+  let t = jobText.helperText[Math.floor(Math.random() * jobText.helperText.length)]
+  let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 15, 0, t, {
+    fontSize: '16px',
     color: '#068866',
     fontFamily: 'BPG_Banner_QuadroSquare',
     wordWrap: {
@@ -167,8 +170,9 @@ export let hitHelper = (text, cl) => {
 }
 
 export let hitObstacle = (text, cl) => {
-  let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, text, {
-    fontSize: '20px',
+  let t = apartmentText.helperText[Math.floor(Math.random() * apartmentText.helperText.length)]
+  let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 15, 0, t, {
+    fontSize: '16px',
     fontFamily: 'BPG_Banner_QuadroSquare',
     color: '#ff3d32',
     wordWrap: {
