@@ -64,6 +64,8 @@ export default class Level1 extends Phaser.Scene {
   d
 
   preload() {
+    this.load.image('splashBomb', 'assets/splash.png')
+    this.load.image('splashBonus', 'assets/bonusSplash.png')
     this.load.image('horizontal', 'assets/v-police.png')
     this.load.image('powerup', 'assets/enemy-explosion-1.png')
     this.load.image('commentBG', 'assets/commentBG.png')

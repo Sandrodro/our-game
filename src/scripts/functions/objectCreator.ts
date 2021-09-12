@@ -8,10 +8,15 @@ export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, sca
     cl.player,
     group,
     () => {
+      console.log(variable.x)
       variable.setActive(false)
       variable.setVisible(false)
       collider.destroy()
       hitObstacle(text, cl)
+      let splash = cl.add.image(variable.x, variable.y, 'splashBomb').setScale(0.3)
+      window.setTimeout(() => {
+        splash.destroy()
+      }, 130)
       window.setTimeout(() => {
         if (cl.bonusNumber != cl.bonusRequired) {
           createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale)
@@ -45,6 +50,10 @@ export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, s
       variable.setVisible(false)
       collider.destroy()
       hitHelper(text, cl)
+      let splash = cl.add.image(variable.x, variable.y, 'splashBonus').setScale(0.2)
+      window.setTimeout(() => {
+        splash.destroy()
+      }, 130)
       window.setTimeout(() => {
         if (cl.bonusNumber != cl.bonusRequired) {
           createHelper(group, variable, cl, image, text, x, y, xVel, yVel, scale)
