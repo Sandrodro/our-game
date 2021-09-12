@@ -65,10 +65,11 @@ export default class Level1 extends Phaser.Scene {
 
   preload() {
     this.load.image('horizontal', 'assets/v-police.png')
+    this.load.image('commentBG', 'assets/commentBG.png')
     this.load.image('powerup', 'assets/enemy-explosion-1.png')
     this.load.image('bomb2', 'assets/drone-1.png')
     this.load.image('vertical', 'assets/v-red.png')
-    this.load.image('jobBack', 'assets/jobBg.png')
+    this.load.image('jobBack', 'assets/shuttle-2BG.png')
     this.load.image('star', 'assets/star.png')
     this.load.image('bomb', 'assets/bomb.png')
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 })
@@ -76,7 +77,7 @@ export default class Level1 extends Phaser.Scene {
 
   create() {
     this.background = createCanvas(this, 'jobBack')
-    console.log(this.background)
+    this.add.image(950, 300, 'commentBG')
     createKeys(this)
 
     // player
@@ -161,13 +162,12 @@ export default class Level1 extends Phaser.Scene {
     horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)
 
     if (this.bonusNumber == this.bonusRequired) {
-      console.log(this.background)
       this.scene.start('Win1', { messages: this.messages })
     } else if (this.lives == 0) {
       this.scene.start('Lose1', { messages: this.messages })
     }
 
-    this.yScroll += 8
+    this.yScroll += 2
 
     this.background.setTilePosition(0, this.yScroll)
   }

@@ -95,7 +95,6 @@ export let createPowerUp = (cl, type) => {
         cl.player.body.checkCollision.none = true
         cl.player.setTint(tint)
         window.setTimeout(() => {
-          console.log(cl.player)
           cl.player.body.checkCollision.none = false
           cl.player.clearTint()
         }, 2000)
@@ -117,7 +116,6 @@ export let createPowerUp = (cl, type) => {
 }
 
 export let createCanvas = (cl, imageName) => {
-  // let sky = cl.add.image(400, 300, imageName)
   let sky = cl.add.tileSprite(400, 300, 800, 600, imageName)
   cl.physicsWidth = sky.width
   cl.physicsHeight = sky.height
@@ -144,19 +142,19 @@ export let createPlayer = cl => {
 
 export let hitHelper = (text, cl) => {
   let t = jobText.helperText[Math.floor(Math.random() * jobText.helperText.length)]
-  let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 15, 0, t, {
+  let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
     fontSize: '16px',
     color: '#068866',
     fontFamily: 'BPG_Banner_QuadroSquare',
     wordWrap: {
-      width: cl.gameWidth - cl.physicsWidth
+      width: cl.gameWidth - cl.physicsWidth - 10
     }
   })
 
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * 60 + 15)
+    text.setY(index * 85 + 15)
 
     if (text.displayList == null) {
       cl.add.existing(text)
@@ -173,20 +171,20 @@ export let hitHelper = (text, cl) => {
 }
 
 export let hitObstacle = (text, cl) => {
-  let t = apartmentText.helperText[Math.floor(Math.random() * apartmentText.helperText.length)]
-  let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 15, 0, t, {
+  let t = jobText.bombText[Math.floor(Math.random() * jobText.bombText.length)]
+  let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
     fontSize: '16px',
     fontFamily: 'BPG_Banner_QuadroSquare',
     color: '#ff3d32',
     wordWrap: {
-      width: cl.gameWidth - cl.physicsWidth
+      width: cl.gameWidth - cl.physicsWidth - 10
     }
   })
 
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * 60 + 15)
+    text.setY(index * 85 + 15)
 
     if (text.displayList == null) {
       cl.add.existing(text)

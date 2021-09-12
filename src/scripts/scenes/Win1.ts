@@ -19,9 +19,13 @@ export default class Win extends Phaser.Scene {
       this.displayMessages.push(message)
     })
     this.displayMessages.forEach((message, index) => {
-      this.add.text(this.sys.game.canvas.width / 2 - message.width / 2, 150 + index * 40, message._text, {
+      this.add.text(100, 150 + index * 80, message._text, {
         fontSize: '28px',
         fontFamily: 'BPG_Banner_QuadroSquare',
+        align: 'center',
+        wordWrap: {
+          width: this.sys.game.canvas.width * 0.9
+        },
         color: message.style.color
       })
     })
