@@ -76,16 +76,20 @@ export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, s
 }
 
 export let createPowerUp = (cl, type) => {
+  let imageName
   let tint
   let types = ['speed', 'lives', 'shield']
-  type == 'speed' ? (tint = 0xde3eed) : type == 'lives' ? (tint = 0x6a3eed) : (tint = 0x3e8ded)
+  type == 'speed'
+    ? ((imageName = 'speedUP'), (tint = 0x3dbdd3))
+    : type == 'lives'
+    ? ((imageName = 'liveUP'), (tint = 0x21edcb))
+    : ((imageName = 'shieldUP'), (tint = 0xd8122e))
 
   let powerUp = cl.physics.add.sprite(
-    (Math.random() * cl.sys.game.canvas.width * 2) / 3,
-    (Math.random() * cl.sys.game.canvas.height * 2) / 3,
-    'powerup'
+    Math.random() * cl.physicsWidth * 0.9,
+    Math.random() * cl.physicsHeight * 0.9,
+    imageName
   )
-  powerUp.setTint(tint)
   let collider = cl.physics.add.overlap(
     cl.player,
     powerUp,
@@ -96,17 +100,21 @@ export let createPowerUp = (cl, type) => {
         window.setTimeout(() => {
           cl.speedUp = 0
           cl.player.clearTint()
-        }, 2500)
+        }, 3100)
       } else if (type == 'lives') {
         cl.lives += 1
-        cl.liveText.setText(`lives: ${cl.lives}`)
+        cl.player.setTint(tint)
+        let xLoc = cl.liveGroup.getLast(true).x + 70
+        let yLoc = cl.liveGroup.getLast(true).y
+        cl.liveGroup.create(xLoc, yLoc, 'liveIcon')
+        window.setTimeout(() => cl.player.clearTint(), 200)
       } else {
         cl.player.body.checkCollision.none = true
         cl.player.setTint(tint)
         window.setTimeout(() => {
           cl.player.body.checkCollision.none = false
           cl.player.clearTint()
-        }, 2000)
+        }, 3100)
       }
 
       powerUp.setActive(false)
@@ -115,7 +123,7 @@ export let createPowerUp = (cl, type) => {
       window.setTimeout(() => {
         let randomPowerUp = Math.floor(Math.random() * 3)
         createPowerUp(cl, types[randomPowerUp])
-      }, 5000)
+      }, 6000)
     },
     null,
     cl
@@ -133,7 +141,15 @@ export let createCanvas = (cl, imageName) => {
   cl.gameWidth = cl.sys.game.canvas.width
   cl.gameHeight = cl.sys.game.canvas.height
 
-  cl.liveText = cl.add.text(16, 16, `lives: ${cl.lives}`, { fontSize: '32px', color: '#000' })
+  cl.liveGroup = cl.add.group({
+    key: 'liveIcon',
+    repeat: 2,
+    setXY: {
+      x: 40,
+      y: 50,
+      stepX: 70
+    }
+  })
   cl.bonusText = cl.add.text(16, 80, `Bonus Collected: ${cl.bonusNumber} / ${cl.bonusRequired}`, {
     fontSize: '32px',
     color: '#000'
@@ -146,6 +162,7 @@ export let createPlayer = cl => {
   cl.player = cl.physics.add.sprite(400, 550, 'dude')
   cl.player.setBounce(0.2)
   cl.player.setCollideWorldBounds(true)
+  console.log(cl.player)
   return cl.player
 }
 
@@ -201,7 +218,7 @@ export let hitObstacle = (text, cl) => {
   })
 
   cl.lives -= 1
-  cl.liveText.setText(`lives: ${cl.lives}`)
+  cl.liveGroup.getLast(true).destroy()
 
   cl.player.setTint(0xff3d32)
   window.setTimeout(() => {

@@ -35,7 +35,7 @@ export default class Level1 extends Phaser.Scene {
 
   //live n
   lives = 3
-  liveText
+  liveGroup
 
   bonusNumber = 0
   bonusText
@@ -64,15 +64,17 @@ export default class Level1 extends Phaser.Scene {
   d
 
   preload() {
+    this.load.image('speedUP', 'assets/speedUP.png')
+    this.load.image('liveUP', 'assets/liveUP.png')
+    this.load.image('shieldUP', 'assets/shieldUP.png')
+    this.load.image('liveIcon', 'assets/liveIcon.png')
     this.load.image('splashBomb', 'assets/splash.png')
     this.load.image('splashBonus', 'assets/bonusSplash.png')
     this.load.image('horizontal', 'assets/v-police.png')
-    this.load.image('powerup', 'assets/enemy-explosion-1.png')
     this.load.image('commentBG', 'assets/commentBG.png')
     this.load.image('bomb2', 'assets/drone-1.png')
     this.load.image('vertical', 'assets/v-red.png')
     this.load.image('homeBack', 'assets/homeBG.png')
-    this.load.image('star', 'assets/star.png')
     this.load.image('bomb', 'assets/bomb.png')
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 })
   }
