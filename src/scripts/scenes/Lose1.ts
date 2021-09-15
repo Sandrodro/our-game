@@ -6,11 +6,11 @@ export default class Lose1 extends Phaser.Scene {
   winText
   messages
   displayMessages = []
+  level
 
   init(data) {
-    console.log(data)
     this.messages = data.messages
-    console.log(this.messages)
+    this.level = data.level
   }
 
   preload() {
@@ -32,6 +32,18 @@ export default class Lose1 extends Phaser.Scene {
         },
         color: message.style.color
       })
+    })
+
+    let nextRect = this.add.rectangle(993, 525, 130, 86, 0xde3eed, 0).setInteractive({
+      useHandCursor: true
+    })
+
+    nextRect.on('pointerdown', pointer => {
+      if (this.level == 'job') {
+        this.scene.start('jobLose2')
+      } else if (this.level == 'house') {
+        this.scene.start('homeLose2')
+      }
     })
   }
 }

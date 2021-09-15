@@ -4,8 +4,10 @@ import { verticalMoverMovement, horizontalMoverMovement, createKeys, playerMove 
 
 export default class Level1 extends Phaser.Scene {
   constructor() {
-    super('Level1')
+    super('jobLevel')
   }
+
+  level = 'job'
 
   // player avatar
   player
@@ -166,9 +168,9 @@ export default class Level1 extends Phaser.Scene {
     horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)
 
     if (this.bonusNumber == this.bonusRequired) {
-      this.scene.start('Win1', { messages: this.messages })
+      this.scene.start('Win1', { messages: this.messages, level: this.level })
     } else if (this.lives == 0) {
-      this.scene.start('Lose1', { messages: this.messages })
+      this.scene.start('Lose1', { messages: this.messages, level: this.level })
     }
 
     this.yScroll += 2

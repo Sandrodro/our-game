@@ -20,10 +20,10 @@ export default class Menu extends Phaser.Scene {
     })
 
     jobRect.on('pointerdown', pointer => {
-      this.scene.start('Level1')
+      this.scene.start('jobLevel')
     })
     apartmentRect.on('pointerdown', pointer => {
-      this.scene.start('Level2')
+      this.scene.start('houseLevel')
     })
   }
 }
