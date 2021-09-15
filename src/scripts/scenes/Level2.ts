@@ -65,7 +65,14 @@ export default class Level1 extends Phaser.Scene {
   s
   d
 
+  loading
+
   preload() {
+    this.load.image('lose1BG', 'assets/lose1BG.png')
+    this.load.image('win1BG', 'assets/win1BG.png')
+    this.load.image('winHome', 'assets/winHome.png')
+    this.load.image('loseHome', 'assets/loseHome.png')
+    this.load.image('portal', 'assets/portal.png')
     this.load.image('speedUP', 'assets/speedUP.png')
     this.load.image('liveUP', 'assets/liveUP.png')
     this.load.image('shieldUP', 'assets/shieldUP.png')
@@ -79,6 +86,17 @@ export default class Level1 extends Phaser.Scene {
     this.load.image('homeBack', 'assets/homeBG.png')
     this.load.image('bomb', 'assets/bomb.png')
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 })
+
+    this.load.on('progress', () => {
+      this.loading = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'LOADING', {
+        fontSize: '32px',
+        color: '#000'
+      })
+    })
+
+    this.load.on('complete', () => {
+      this.loading.destroy()
+    })
   }
 
   create() {
@@ -161,12 +179,6 @@ export default class Level1 extends Phaser.Scene {
     let types = ['speed', 'lives', 'shield']
     let randomPowerUp = Math.floor(Math.random() * 3)
     this.speedPowerUp = createPowerUp(this, types[randomPowerUp])
-
-    this.load.image('lose1BG', 'assets/lose1BG.png')
-    this.load.image('win1BG', 'assets/win1BG.png')
-    this.load.image('winHome', 'assets/winHome.png')
-    this.load.image('loseHome', 'assets/loseHome.png')
-    this.load.start()
   }
 
   update() {

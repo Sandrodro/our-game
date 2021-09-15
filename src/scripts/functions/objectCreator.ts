@@ -2,7 +2,7 @@ import { jobText, apartmentText } from '../text'
 
 export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1) => {
   if (group.getLength() == 0) {
-    variable = group.get(x, y, image)
+    variable = group.get(image)
   }
   let collider = cl.physics.add.overlap(
     cl.player,
@@ -26,21 +26,26 @@ export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, sca
     null,
     cl
   )
-  variable.setX(x)
-  variable.setY(y)
-  variable.setActive(true)
-  variable.setVisible(true)
-  variable.setTint(0xff0000)
-  variable.setScale(scale)
-  variable.setBounce(1)
-  variable.setCollideWorldBounds(true)
-  variable.setVelocity(xVel, yVel)
+  let portal = cl.add.image(x, y, 'portal').setScale(5)
+
+  window.setTimeout(() => {
+    variable.setX(x)
+    variable.setY(y)
+    variable.setActive(true)
+    variable.setVisible(true)
+    variable.setTint(0xff0000)
+    variable.setScale(scale)
+    variable.setBounce(1)
+    variable.setCollideWorldBounds(true)
+    variable.setVelocity(xVel, yVel)
+    portal.destroy()
+  }, 400)
   return variable
 }
 
 export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1) => {
   if (group.getLength() == 0) {
-    variable = group.get(x, y, image)
+    variable = group.get(false, false, image)
   }
   let collider = cl.physics.add.overlap(
     cl.player,
@@ -63,15 +68,22 @@ export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, s
     null,
     cl
   )
-  variable.setX(x)
-  variable.setY(y)
-  variable.setActive(true)
-  variable.setVisible(true)
-  variable.setScale(scale)
-  variable.setBounce(1)
-  variable.setTint(0x60ac23)
-  variable.setCollideWorldBounds(true)
-  variable.setVelocity(xVel, yVel)
+
+  let portal = cl.add.image(x, y, 'portal').setScale(5)
+  portal.setTint(0x60ac23)
+
+  window.setTimeout(() => {
+    variable.setX(x)
+    variable.setY(y)
+    variable.setActive(true)
+    variable.setVisible(true)
+    variable.setScale(scale)
+    variable.setBounce(1)
+    variable.setTint(0x60ac23)
+    variable.setCollideWorldBounds(true)
+    variable.setVelocity(xVel, yVel)
+    portal.destroy()
+  }, 400)
   return variable
 }
 
