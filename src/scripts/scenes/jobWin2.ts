@@ -3,10 +3,6 @@ export default class jobWin2 extends Phaser.Scene {
     super('jobWin2')
   }
 
-  preload() {
-    this.load.image('winJob', 'assets/winJob.png')
-  }
-
   create() {
     this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'winJob')
 

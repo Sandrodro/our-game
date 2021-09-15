@@ -42,7 +42,7 @@ export default class Level1 extends Phaser.Scene {
   bonusNumber = 0
   bonusText
 
-  bonusRequired = 2
+  bonusRequired = 3
 
   speedUp = 0
 
@@ -82,6 +82,8 @@ export default class Level1 extends Phaser.Scene {
   }
 
   create() {
+    this.lives = 3
+
     this.background = createCanvas(this, 'homeBack')
     this.add.image(950, 300, 'commentBG')
     createKeys(this)
@@ -101,8 +103,8 @@ export default class Level1 extends Phaser.Scene {
       'ბომბს დაეტაკე!',
       Math.random() * 500,
       Math.random() * 400,
-      400,
-      400,
+      300,
+      300,
       2.5
     )
     this.bomb2Group = this.physics.add.group({
@@ -116,8 +118,8 @@ export default class Level1 extends Phaser.Scene {
       'მეორე ბომბს დაეტაკე!',
       Math.random() * 500 + 200,
       Math.random() * 200,
+      -300,
       -400,
-      -500,
       1.1
     )
 
@@ -132,7 +134,7 @@ export default class Level1 extends Phaser.Scene {
       'ჰორიზონტალურს დაეტაკე!',
       50,
       50,
-      400,
+      300,
       0,
       0.6
     )
@@ -149,7 +151,7 @@ export default class Level1 extends Phaser.Scene {
       70,
       500,
       0,
-      400,
+      300,
       0.6
     )
     this.helperGroup = this.physics.add.group({
@@ -159,6 +161,12 @@ export default class Level1 extends Phaser.Scene {
     let types = ['speed', 'lives', 'shield']
     let randomPowerUp = Math.floor(Math.random() * 3)
     this.speedPowerUp = createPowerUp(this, types[randomPowerUp])
+
+    this.load.image('lose1BG', 'assets/lose1BG.png')
+    this.load.image('win1BG', 'assets/win1BG.png')
+    this.load.image('winHome', 'assets/winHome.png')
+    this.load.image('loseHome', 'assets/loseHome.png')
+    this.load.start()
   }
 
   update() {

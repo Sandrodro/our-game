@@ -13,10 +13,6 @@ export default class Win extends Phaser.Scene {
     this.level = data.level
   }
 
-  preload() {
-    this.load.image('win1BG', 'assets/win1BG.png')
-  }
-
   create() {
     this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'win1BG')
     this.messages.forEach(message => {

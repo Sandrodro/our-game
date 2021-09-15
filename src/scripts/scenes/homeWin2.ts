@@ -3,10 +3,6 @@ export default class homeWin2 extends Phaser.Scene {
     super('homeWin2')
   }
 
-  preload() {
-    this.load.image('winHome', 'assets/winHome.png')
-  }
-
   create() {
     this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'winHome')
 

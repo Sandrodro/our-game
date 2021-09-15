@@ -13,10 +13,6 @@ export default class Lose1 extends Phaser.Scene {
     this.level = data.level
   }
 
-  preload() {
-    this.load.image('lose1BG', 'assets/lose1BG.png')
-  }
-
   create() {
     this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'lose1BG')
     this.messages.forEach(message => {

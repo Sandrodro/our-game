@@ -3,10 +3,6 @@ export default class jobLose2 extends Phaser.Scene {
     super('jobLose2')
   }
 
-  preload() {
-    this.load.image('loseJob', 'assets/loseJob.png')
-  }
-
   create() {
     this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'loseJob')
 
