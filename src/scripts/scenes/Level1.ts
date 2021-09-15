@@ -101,6 +101,7 @@ export default class Level1 extends Phaser.Scene {
 
   create() {
     this.lives = 3
+    this.bonusNumber = 0
 
     this.background = createCanvas(this, 'jobBack')
     this.add.image(950, 300, 'commentBG')
