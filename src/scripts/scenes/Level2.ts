@@ -119,7 +119,6 @@ export default class Level1 extends Phaser.Scene {
       this.bomb,
       this,
       'bomb',
-      'ბომბს დაეტაკე!',
       Math.random() * 500,
       Math.random() * 400,
       300,
@@ -134,7 +133,6 @@ export default class Level1 extends Phaser.Scene {
       this.bomb2,
       this,
       'bomb2',
-      'მეორე ბომბს დაეტაკე!',
       Math.random() * 500 + 200,
       Math.random() * 200,
       -300,
@@ -150,7 +148,6 @@ export default class Level1 extends Phaser.Scene {
       this.horizontal_mover,
       this,
       'horizontal',
-      'ჰორიზონტალურს დაეტაკე!',
       50,
       50,
       300,
@@ -166,7 +163,6 @@ export default class Level1 extends Phaser.Scene {
       this.vertical_mover,
       this,
       'vertical',
-      'ვერტიკალურს დაეტაკე!',
       70,
       500,
       0,
@@ -176,7 +172,7 @@ export default class Level1 extends Phaser.Scene {
     this.helperGroup = this.physics.add.group({
       defaultKey: 'vertical'
     })
-    this.helper = createHelper(this.helperGroup, this.helper, this, 'bomb', 'რაღაც კარგი მოხდა!', 400, 200, 300, 300, 2)
+    this.helper = createHelper(this.helperGroup, this.helper, this, 'bomb', Math.random() * 600, 200, 300, 300, 2)
     let types = ['speed', 'lives', 'shield']
     let randomPowerUp = Math.floor(Math.random() * 3)
     this.speedPowerUp = createPowerUp(this, types[randomPowerUp])

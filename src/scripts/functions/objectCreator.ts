@@ -1,6 +1,6 @@
 import { jobText, apartmentText } from '../text'
 
-export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1) => {
+export let createBomb = (group, variable, cl, image, x, y, xVel, yVel, scale = 1) => {
   if (group.getLength() == 0) {
     variable = group.get(image)
   }
@@ -12,14 +12,14 @@ export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, sca
       variable.setActive(false)
       variable.setVisible(false)
       collider.destroy()
-      hitObstacle(text, cl)
+      hitObstacle(cl)
       let splash = cl.add.image(variable.x, variable.y, 'splashBomb').setScale(0.3)
       window.setTimeout(() => {
         splash.destroy()
       }, 130)
       window.setTimeout(() => {
         if (cl.bonusNumber != cl.bonusRequired) {
-          createBomb(group, variable, cl, image, text, x, y, xVel, yVel, scale)
+          createBomb(group, variable, cl, image, x, y, xVel, yVel, scale)
         }
       }, 2000)
     },
@@ -43,7 +43,7 @@ export let createBomb = (group, variable, cl, image, text, x, y, xVel, yVel, sca
   return variable
 }
 
-export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, scale = 1) => {
+export let createHelper = (group, variable, cl, image, x, y, xVel, yVel, scale = 1) => {
   if (group.getLength() == 0) {
     variable = group.get(false, false, image)
   }
@@ -54,16 +54,16 @@ export let createHelper = (group, variable, cl, image, text, x, y, xVel, yVel, s
       variable.setActive(false)
       variable.setVisible(false)
       collider.destroy()
-      hitHelper(text, cl)
+      hitHelper(cl)
       let splash = cl.add.image(variable.x, variable.y, 'splashBonus').setScale(0.2)
       window.setTimeout(() => {
         splash.destroy()
       }, 130)
       window.setTimeout(() => {
         if (cl.bonusNumber != cl.bonusRequired) {
-          createHelper(group, variable, cl, image, text, x, y, xVel, yVel, scale)
+          createHelper(group, variable, cl, image, x, y, xVel, yVel, scale)
         }
-      }, 2000)
+      }, 2600)
     },
     null,
     cl
@@ -178,10 +178,21 @@ export let createPlayer = cl => {
   return cl.player
 }
 
-export let hitHelper = (text, cl) => {
-  let t = jobText.helperText[Math.floor(Math.random() * jobText.helperText.length)]
+export let hitHelper = cl => {
+  let t
+  if (cl.level == 'job') {
+    t = jobText.helperText[Math.floor(Math.random() * jobText.helperText.length)]
+    if (cl.messages.includes(t)) {
+      t = jobText.helperText[Math.floor(Math.random() * jobText.helperText.length)]
+    }
+  } else if (cl.level == 'house') {
+    t = apartmentText.helperText[Math.floor(Math.random() * apartmentText.helperText.length)]
+    if (cl.messages.includes(t)) {
+      t = apartmentText.helperText[Math.floor(Math.random() * apartmentText.helperText.length)]
+    }
+  }
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
-    fontSize: '16px',
+    fontSize: cl.level == 'house' ? '16px' : '18px',
     color: '#068866',
     fontFamily: 'BPG_Banner_QuadroSquare',
     wordWrap: {
@@ -192,7 +203,7 @@ export let hitHelper = (text, cl) => {
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * 85 + 15)
+    text.setY(index * (cl.level == 'house' ? 80 : 90) + 15)
 
     if (text.displayList == null) {
       cl.add.existing(text)
@@ -208,10 +219,22 @@ export let hitHelper = (text, cl) => {
   }, 500)
 }
 
-export let hitObstacle = (text, cl) => {
-  let t = jobText.bombText[Math.floor(Math.random() * jobText.bombText.length)]
+export let hitObstacle = cl => {
+  let t
+  if (cl.level == 'job') {
+    t = jobText.bombText[Math.floor(Math.random() * jobText.bombText.length)]
+    if (cl.messages.includes(t)) {
+      t = jobText.bombText[Math.floor(Math.random() * jobText.bombText.length)]
+    }
+  }
+  if (cl.level == 'house') {
+    t = apartmentText.bombText[Math.floor(Math.random() * apartmentText.bombText.length)]
+    if (cl.messages.includes(t)) {
+      t = apartmentText.bombText[Math.floor(Math.random() * apartmentText.bombText.length)]
+    }
+  }
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
-    fontSize: '16px',
+    fontSize: cl.level == 'house' ? '15px' : '18px',
     fontFamily: 'BPG_Banner_QuadroSquare',
     color: '#ff3d32',
     wordWrap: {
@@ -222,7 +245,7 @@ export let hitObstacle = (text, cl) => {
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * 85 + 15)
+    text.setY(index * (cl.level == 'house' ? 80 : 90) + 15)
 
     if (text.displayList == null) {
       cl.add.existing(text)
