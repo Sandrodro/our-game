@@ -95,14 +95,13 @@ export let createPowerUp = (cl, type) => {
     ? ((imageName = 'speedUP'), (tint = 0x3dbdd3))
     : type == 'lives'
     ? ((imageName = 'liveUP'), (tint = 0x21edcb))
-    : ((imageName = 'shieldUP'), (tint = 0xc0d6e4))
+    : ((imageName = 'shieldUP'), (tint = 0x8640c2))
 
   let powerUp = cl.physics.add.sprite(
     Math.random() * cl.physicsWidth * 0.9,
     Math.random() * cl.physicsHeight * 0.9,
     imageName
   )
-  imageName == 'shieldUP' ? powerUp.setTint(0xc0d6e4) : null
   let collider = cl.physics.add.overlap(
     cl.player,
     powerUp,
