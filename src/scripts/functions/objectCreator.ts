@@ -95,13 +95,14 @@ export let createPowerUp = (cl, type) => {
     ? ((imageName = 'speedUP'), (tint = 0x3dbdd3))
     : type == 'lives'
     ? ((imageName = 'liveUP'), (tint = 0x21edcb))
-    : ((imageName = 'shieldUP'), (tint = 0xd8122e))
+    : ((imageName = 'shieldUP'), (tint = 0xc0d6e4))
 
   let powerUp = cl.physics.add.sprite(
     Math.random() * cl.physicsWidth * 0.9,
     Math.random() * cl.physicsHeight * 0.9,
     imageName
   )
+  imageName == 'shieldUP' ? powerUp.setTint(0xc0d6e4) : null
   let collider = cl.physics.add.overlap(
     cl.player,
     powerUp,
@@ -203,7 +204,7 @@ export let hitHelper = cl => {
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * (cl.level == 'house' ? 80 : 90) + 15)
+    text.setY(index * (cl.level == 'house' ? 87 : 90) + 15)
 
     if (text.displayList == null) {
       cl.add.existing(text)
@@ -245,7 +246,7 @@ export let hitObstacle = cl => {
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * (cl.level == 'house' ? 80 : 90) + 15)
+    text.setY(index * (cl.level == 'house' ? 87 : 90) + 15)
 
     if (text.displayList == null) {
       cl.add.existing(text)
