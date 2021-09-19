@@ -8,7 +8,6 @@ export let createBomb = (group, variable, cl, image, x, y, xVel, yVel, scale = 1
     cl.player,
     group,
     () => {
-      console.log(variable.x)
       variable.setActive(false)
       variable.setVisible(false)
       collider.destroy()
@@ -160,11 +159,15 @@ export let createCanvas = (cl, imageName) => {
       stepX: 70
     }
   })
-  cl.bonusText = cl.add.text(16, 80, `Bonus Collected: ${cl.bonusNumber} / ${cl.bonusRequired}`, {
-    fontSize: '32px',
-    color: '#000'
+  cl.bonusGroup = cl.add.group({
+    key: 'bonusCircle',
+    repeat: 2,
+    setXY: {
+      x: 40,
+      y: 95,
+      stepX: 70
+    }
   })
-
   return sky
 }
 
@@ -173,7 +176,6 @@ export let createPlayer = cl => {
   cl.player.setBounce(0.2)
   cl.player.setCollideWorldBounds(true)
   cl.player.setScale(0.9)
-  console.log(cl.player)
   return cl.player
 }
 
@@ -210,7 +212,7 @@ export let hitHelper = cl => {
   })
 
   cl.bonusNumber += 1
-  cl.bonusText.setText(`Bonus Collected: ${cl.bonusNumber} / ${cl.bonusRequired}`)
+  cl.bonusGroup.children.entries[cl.bonusNumber - 1].setTexture('bonusCount')
 
   cl.player.setTint(0x068866)
   window.setTimeout(() => {

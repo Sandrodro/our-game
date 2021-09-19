@@ -41,6 +41,7 @@ export default class Level1 extends Phaser.Scene {
 
   bonusNumber = 0
   bonusText
+  bonusGroup
 
   bonusRequired = 3
 
@@ -70,6 +71,7 @@ export default class Level1 extends Phaser.Scene {
   loading
 
   preload() {
+    this.load.image('bonusCircle', 'assets/bonusCircle.png')
     this.load.image('lose1BG', 'assets/lose1BG.png')
     this.load.image('win1BG', 'assets/win1BG.png')
     this.load.image('winHome', 'assets/winJob.png')
@@ -89,6 +91,7 @@ export default class Level1 extends Phaser.Scene {
     this.load.image('horizontalBomb', 'assets/horizontalBomb.png')
     this.load.image('bomb2', 'assets/bomb2.png')
     this.load.image('bomb', 'assets/bomb.png')
+    this.load.image('bonusCount', 'assets/randomBonus.png')
 
     this.load.on('progress', () => {
       this.loadImage = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'loading')
@@ -112,6 +115,7 @@ export default class Level1 extends Phaser.Scene {
   create() {
     this.lives = 3
     this.bonusNumber = 0
+    this.messages = []
 
     this.background = createCanvas(this, 'homeBack')
     this.add.image(950, 300, 'commentBG')
@@ -133,7 +137,7 @@ export default class Level1 extends Phaser.Scene {
       Math.random() * 400,
       250,
       250,
-      1
+      0.8
     )
     this.bomb2Group = this.physics.add.group({
       defaultKey: 'bomb2'
@@ -147,7 +151,7 @@ export default class Level1 extends Phaser.Scene {
       Math.random() * 200,
       -250,
       -350,
-      1
+      0.8
     )
 
     this.horizontal_moverGroup = this.physics.add.group({
@@ -162,7 +166,7 @@ export default class Level1 extends Phaser.Scene {
       50,
       280,
       0,
-      1
+      0.9
     )
 
     this.vertical_moverGroup = this.physics.add.group({
@@ -177,12 +181,22 @@ export default class Level1 extends Phaser.Scene {
       500,
       0,
       260,
-      1
+      0.8
     )
     this.helperGroup = this.physics.add.group({
       defaultKey: 'bonusHome'
     })
-    this.helper = createHelper(this.helperGroup, this.helper, this, 'bonusHome', Math.random() * 600, 200, 300, 300, 1)
+    this.helper = createHelper(
+      this.helperGroup,
+      this.helper,
+      this,
+      'bonusHome',
+      Math.random() * 600,
+      200,
+      300,
+      300,
+      1.1
+    )
     let types = ['speed', 'lives', 'shield']
     let randomPowerUp = Math.floor(Math.random() * 3)
     this.speedPowerUp = createPowerUp(this, types[randomPowerUp])

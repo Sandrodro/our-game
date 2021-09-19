@@ -20,7 +20,7 @@ export default class Lose1 extends Phaser.Scene {
         this.displayMessages.push(message)
       }
     })
-    this.displayMessages.forEach((message, index) => {
+    this.displayMessages.reverse().forEach((message, index) => {
       let text = this.add.text((message.width * 2) / 3, 250 + index * 80, message._text, {
         fontSize: '23px',
         fontFamily: 'BPG_Banner_QuadroSquare',
