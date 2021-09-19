@@ -16,8 +16,8 @@ export default class Lose1 extends Phaser.Scene {
   create() {
     this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'lose1BG')
     this.messages.forEach((message, i) => {
-      if (this.messages.length - i <= 3) {
-        this.displayMessages.push(message)
+      if (i < 3) {
+        this.displayMessages.unshift(message)
       }
     })
     this.displayMessages.reverse().forEach((message, index) => {

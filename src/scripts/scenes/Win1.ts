@@ -14,10 +14,11 @@ export default class Win extends Phaser.Scene {
   }
 
   create() {
+    console.log(this.messages)
     this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'win1BG')
     this.messages.forEach((message, i) => {
-      if (this.messages.length - i <= 3) {
-        this.displayMessages.push(message)
+      if (i < 3) {
+        this.displayMessages.unshift(message)
       }
     })
     this.displayMessages.reverse().forEach((message, index) => {
