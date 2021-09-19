@@ -59,6 +59,8 @@ export default class Level1 extends Phaser.Scene {
 
   movers
 
+  loadImage
+
   background
   yScroll = 0
 
@@ -82,23 +84,31 @@ export default class Level1 extends Phaser.Scene {
     this.load.image('liveIcon', 'assets/liveIcon.png')
     this.load.image('splashBomb', 'assets/splash.png')
     this.load.image('splashBonus', 'assets/bonusSplash.png')
-    this.load.image('horizontal', 'assets/v-police.png')
     this.load.image('commentBG', 'assets/commentBG.png')
-    this.load.image('bomb2', 'assets/drone-1.png')
-    this.load.image('vertical', 'assets/v-red.png')
-    this.load.image('jobBack', 'assets/shuttle-2BG.png')
+    this.load.image('jobBack', 'assets/jobBG.png')
+    this.load.image('dude', 'assets/dude.png')
+    this.load.image('bonus1', 'assets/bonus2.png')
+    this.load.image('verticalBomb', 'assets/verticalBomb.png')
+    this.load.image('horizontalBomb', 'assets/horizontalBomb.png')
+    this.load.image('bomb2', 'assets/bomb2.png')
     this.load.image('bomb', 'assets/bomb.png')
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 })
 
     this.load.on('progress', () => {
-      this.loading = this.add.text(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'LOADING', {
-        fontSize: '32px',
-        color: '#000'
-      })
+      this.loadImage = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'loading')
+      this.loading = this.add.text(
+        this.sys.game.canvas.width / 2 - 65,
+        this.sys.game.canvas.height / 2 + 150,
+        'LOADING',
+        {
+          fontSize: '32px',
+          color: '#F0F7FF'
+        }
+      )
     })
 
     this.load.on('complete', () => {
       this.loading.destroy()
+      this.loadImage.destroy()
     })
   }
 
@@ -124,9 +134,9 @@ export default class Level1 extends Phaser.Scene {
       'bomb',
       Math.random() * 500,
       Math.random() * 400,
-      300,
-      300,
-      2.5
+      250,
+      250,
+      1
     )
 
     this.bomb2Group = this.physics.add.group({
@@ -139,44 +149,44 @@ export default class Level1 extends Phaser.Scene {
       'bomb2',
       Math.random() * 500 + 200,
       Math.random() * 200,
-      -300,
-      -400,
+      -250,
+      -350,
       1.1
     )
 
     this.horizontal_moverGroup = this.physics.add.group({
-      defaultKey: 'horizontal'
+      defaultKey: 'horizontalBomb'
     })
     this.horizontal_mover = createBomb(
       this.horizontal_moverGroup,
       this.horizontal_mover,
       this,
-      'horizontal',
+      'horizontalBomb',
       50,
       50,
       300,
       0,
-      0.6
+      1
     )
 
     this.vertical_moverGroup = this.physics.add.group({
-      defaultKey: 'vertical'
+      defaultKey: 'verticalBomb'
     })
     this.vertical_mover = createBomb(
       this.vertical_moverGroup,
       this.vertical_mover,
       this,
-      'vertical',
+      'verticalBomb',
       70,
       500,
       0,
-      300,
-      0.6
+      260,
+      1
     )
     this.helperGroup = this.physics.add.group({
-      defaultKey: 'vertical'
+      defaultKey: 'bonus1'
     })
-    this.helper = createHelper(this.helperGroup, this.helper, this, 'bomb', Math.random() * 600, 200, 300, 300, 2)
+    this.helper = createHelper(this.helperGroup, this.helper, this, 'bonus1', Math.random() * 600, 200, 300, 300, 1)
     let types = ['speed', 'lives', 'shield']
     let randomPowerUp = Math.floor(Math.random() * 3)
     this.speedPowerUp = createPowerUp(this, types[randomPowerUp])

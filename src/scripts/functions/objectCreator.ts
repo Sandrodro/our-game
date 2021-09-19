@@ -33,7 +33,6 @@ export let createBomb = (group, variable, cl, image, x, y, xVel, yVel, scale = 1
     variable.setY(y)
     variable.setActive(true)
     variable.setVisible(true)
-    variable.setTint(0xff0000)
     variable.setScale(scale)
     variable.setBounce(1)
     variable.setCollideWorldBounds(true)
@@ -79,7 +78,6 @@ export let createHelper = (group, variable, cl, image, x, y, xVel, yVel, scale =
     variable.setVisible(true)
     variable.setScale(scale)
     variable.setBounce(1)
-    variable.setTint(0x60ac23)
     variable.setCollideWorldBounds(true)
     variable.setVelocity(xVel, yVel)
     portal.destroy()
@@ -174,6 +172,7 @@ export let createPlayer = cl => {
   cl.player = cl.physics.add.sprite(400, 550, 'dude')
   cl.player.setBounce(0.2)
   cl.player.setCollideWorldBounds(true)
+  cl.player.setScale(0.9)
   console.log(cl.player)
   return cl.player
 }
