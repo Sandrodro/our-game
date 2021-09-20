@@ -104,11 +104,11 @@ export let createPowerUp = (cl, type) => {
     powerUp,
     () => {
       if (type == 'speed') {
+        cl.player.setFrame(2)
         cl.speedUp = 200
-        cl.player.setTint(tint)
         window.setTimeout(() => {
           cl.speedUp = 0
-          cl.player.clearTint()
+          cl.player.setFrame(0)
         }, 3100)
       } else if (type == 'lives') {
         cl.lives += 1
@@ -119,10 +119,10 @@ export let createPowerUp = (cl, type) => {
         window.setTimeout(() => cl.player.clearTint(), 200)
       } else {
         cl.player.body.checkCollision.none = true
-        cl.player.setTint(tint)
+        cl.player.setFrame(1)
         window.setTimeout(() => {
           cl.player.body.checkCollision.none = false
-          cl.player.clearTint()
+          cl.player.setFrame(0)
         }, 3100)
       }
 
@@ -172,7 +172,7 @@ export let createCanvas = (cl, imageName) => {
 }
 
 export let createPlayer = cl => {
-  cl.player = cl.physics.add.sprite(400, 550, 'dude')
+  cl.player = cl.physics.add.sprite(400, 550, 'dudeSheet').setFrame(0)
   cl.player.setBounce(0.2)
   cl.player.setCollideWorldBounds(true)
   cl.player.setScale(0.9)

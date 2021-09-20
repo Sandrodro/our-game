@@ -88,13 +88,16 @@ export default class Level1 extends Phaser.Scene {
     this.load.image('splashBonus', 'assets/bonusSplash.png')
     this.load.image('commentBG', 'assets/commentBG.png')
     this.load.image('jobBack', 'assets/jobBG.png')
-    this.load.image('dude', 'assets/dude.png')
     this.load.image('bonus1', 'assets/bonus2.png')
     this.load.image('verticalBomb', 'assets/verticalBomb.png')
     this.load.image('horizontalBomb', 'assets/horizontalBomb.png')
     this.load.image('bomb2', 'assets/bomb2.png')
     this.load.image('bomb', 'assets/bomb.png')
     this.load.image('bonusCount', 'assets/randomBonus.png')
+    this.load.spritesheet('dudeSheet', 'assets/dudeSheet.png', {
+      frameWidth: 50,
+      frameHeight: 71
+    })
 
     this.load.on('progress', () => {
       this.loadImage = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'loading')
