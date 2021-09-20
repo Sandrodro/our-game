@@ -38,6 +38,8 @@ export default class Level1 extends Phaser.Scene {
   livePowerUp
   shieldPowerUp
 
+  shieldActive = false
+
   //live n
   lives = 3
   liveGroup
@@ -70,6 +72,8 @@ export default class Level1 extends Phaser.Scene {
   a
   s
   d
+
+  worldSpeedUp
 
   loading
 
@@ -206,8 +210,12 @@ export default class Level1 extends Phaser.Scene {
     horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)
 
     if (this.bonusNumber == this.bonusRequired) {
+      this.worldSpeedUp = 0
+      this.shieldActive = false
       this.scene.start('Win1', { messages: this.messages, level: this.level })
     } else if (this.lives == 0) {
+      this.worldSpeedUp = 0
+      this.shieldActive = false
       this.scene.start('Lose1', { messages: this.messages, level: this.level })
     }
 

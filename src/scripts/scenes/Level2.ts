@@ -35,6 +35,8 @@ export default class Level1 extends Phaser.Scene {
   livePowerUp
   shieldPowerUp
 
+  shieldActive = false
+
   //live n
   lives = 3
   liveGroup
@@ -70,12 +72,14 @@ export default class Level1 extends Phaser.Scene {
 
   loading
 
+  worldSpeedUp
+
   preload() {
     this.load.image('bonusCircle', 'assets/bonusCircle.png')
     this.load.image('lose1BG', 'assets/lose1BG.png')
     this.load.image('win1BG', 'assets/win1BG.png')
-    this.load.image('winHome', 'assets/winJob.png')
-    this.load.image('loseHome', 'assets/loseJob.png')
+    this.load.image('winHome', 'assets/winHome.png')
+    this.load.image('loseHome', 'assets/loseHome.png')
     this.load.image('portal', 'assets/portal.png')
     this.load.image('speedUP', 'assets/speedUP.png')
     this.load.image('liveUP', 'assets/liveUP.png')
@@ -212,8 +216,12 @@ export default class Level1 extends Phaser.Scene {
     horizontalMoverMovement(this.horizontal_mover, this, this.horizontal_mover.displayWidth)
 
     if (this.bonusNumber == this.bonusRequired) {
+      this.worldSpeedUp = 0
+      this.shieldActive = false
       this.scene.start('Win1', { messages: this.messages, level: this.level })
     } else if (this.lives == 0) {
+      this.worldSpeedUp = 0
+      this.shieldActive = false
       this.scene.start('Lose1', { messages: this.messages, level: this.level })
     }
 

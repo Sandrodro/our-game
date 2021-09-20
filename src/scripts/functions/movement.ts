@@ -6,37 +6,21 @@ export let createKeys = cl => {
 }
 
 export let playerMove = cl => {
-  cl.w.on('down', e => {
-    cl.player.setVelocityY(-300 - cl.speedUp)
-  })
-
-  cl.w.on('up', e => {
-    cl.player.setVelocityY(0)
-  })
-
-  cl.s.on('down', e => {
-    cl.player.setVelocityY(300 + cl.speedUp)
-  })
-
-  cl.s.on('up', e => {
-    cl.player.setVelocityY(0)
-  })
-
-  cl.a.on('down', e => {
+  if (cl.a.isDown) {
     cl.player.setVelocityX(-300 - cl.speedUp)
-  })
-
-  cl.a.on('up', e => {
-    cl.player.setVelocityX(0)
-  })
-
-  cl.d.on('down', e => {
+  } else if (cl.d.isDown) {
     cl.player.setVelocityX(300 + cl.speedUp)
-  })
-
-  cl.d.on('up', e => {
+  } else {
     cl.player.setVelocityX(0)
-  })
+  }
+
+  if (cl.w.isDown) {
+    cl.player.setVelocityY(-300 - cl.speedUp)
+  } else if (cl.s.isDown) {
+    cl.player.setVelocityY(300 + cl.speedUp)
+  } else {
+    cl.player.setVelocityY(0)
+  }
 }
 
 export function verticalMoverMovement(variable, cl, spriteHeight) {

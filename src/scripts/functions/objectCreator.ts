@@ -8,19 +8,21 @@ export let createBomb = (group, variable, cl, image, x, y, xVel, yVel, scale = 1
     cl.player,
     group,
     () => {
-      variable.setActive(false)
-      variable.setVisible(false)
-      collider.destroy()
-      hitObstacle(cl)
-      let splash = cl.add.image(variable.x, variable.y, 'splashBomb').setScale(0.3)
-      window.setTimeout(() => {
-        splash.destroy()
-      }, 130)
-      window.setTimeout(() => {
-        if (cl.bonusNumber != cl.bonusRequired) {
-          createBomb(group, variable, cl, image, x, y, xVel, yVel, scale)
-        }
-      }, 2000)
+      if (!cl.shieldActive) {
+        variable.setActive(false)
+        variable.setVisible(false)
+        collider.destroy()
+        hitObstacle(cl)
+        let splash = cl.add.image(variable.x, variable.y, 'splashBomb').setScale(0.3)
+        window.setTimeout(() => {
+          splash.destroy()
+        }, 130)
+        window.setTimeout(() => {
+          if (cl.bonusNumber != cl.bonusRequired) {
+            createBomb(group, variable, cl, image, x, y, xVel, yVel, scale)
+          }
+        }, 2000)
+      }
     },
     null,
     cl
@@ -86,13 +88,8 @@ export let createHelper = (group, variable, cl, image, x, y, xVel, yVel, scale =
 
 export let createPowerUp = (cl, type) => {
   let imageName
-  let tint
   let types = ['speed', 'lives', 'shield']
-  type == 'speed'
-    ? ((imageName = 'speedUP'), (tint = 0x3dbdd3))
-    : type == 'lives'
-    ? ((imageName = 'liveUP'), (tint = 0x21edcb))
-    : ((imageName = 'shieldUP'), (tint = 0x8640c2))
+  type == 'speed' ? (imageName = 'speedUP') : type == 'lives' ? (imageName = 'liveUP') : (imageName = 'shieldUP')
 
   let powerUp = cl.physics.add.sprite(
     Math.random() * cl.physicsWidth * 0.9,
@@ -112,16 +109,16 @@ export let createPowerUp = (cl, type) => {
         }, 3100)
       } else if (type == 'lives') {
         cl.lives += 1
-        cl.player.setTint(tint)
+        cl.player.setTint(0x21edcb)
         let xLoc = cl.liveGroup.getLast(true).x + 70
         let yLoc = cl.liveGroup.getLast(true).y
         cl.liveGroup.create(xLoc, yLoc, 'liveIcon')
         window.setTimeout(() => cl.player.clearTint(), 200)
       } else {
-        cl.player.body.checkCollision.none = true
+        cl.shieldActive = true
         cl.player.setFrame(1)
         window.setTimeout(() => {
-          cl.player.body.checkCollision.none = false
+          cl.shieldActive = false
           cl.player.setFrame(0)
         }, 3100)
       }
