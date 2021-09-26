@@ -70,6 +70,11 @@ export default class Level1 extends Phaser.Scene {
   s
   d
 
+  up
+  down
+  left
+  right
+
   loading
 
   worldSpeedUp

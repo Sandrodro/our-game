@@ -3,20 +3,25 @@ export let createKeys = cl => {
   cl.s = cl.input.keyboard.addKey('S')
   cl.a = cl.input.keyboard.addKey('A')
   cl.d = cl.input.keyboard.addKey('D')
+
+  cl.up = cl.input.keyboard.addKey('UP')
+  cl.down = cl.input.keyboard.addKey('DOWN')
+  cl.left = cl.input.keyboard.addKey('LEFT')
+  cl.right = cl.input.keyboard.addKey('RIGHT')
 }
 
 export let playerMove = cl => {
-  if (cl.a.isDown) {
+  if (cl.a.isDown || cl.left.isDown) {
     cl.player.setVelocityX(-300 - cl.speedUp)
-  } else if (cl.d.isDown) {
+  } else if (cl.d.isDown || cl.right.isDown) {
     cl.player.setVelocityX(300 + cl.speedUp)
   } else {
     cl.player.setVelocityX(0)
   }
 
-  if (cl.w.isDown) {
+  if (cl.w.isDown || cl.up.isDown) {
     cl.player.setVelocityY(-300 - cl.speedUp)
-  } else if (cl.s.isDown) {
+  } else if (cl.s.isDown || cl.down.isDown) {
     cl.player.setVelocityY(300 + cl.speedUp)
   } else {
     cl.player.setVelocityY(0)

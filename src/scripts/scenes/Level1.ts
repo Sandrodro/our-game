@@ -73,6 +73,11 @@ export default class Level1 extends Phaser.Scene {
   s
   d
 
+  up
+  down
+  left
+  right
+
   worldSpeedUp
 
   loading
@@ -103,7 +108,12 @@ export default class Level1 extends Phaser.Scene {
       frameHeight: 71
     })
 
-    this.load.on('progress', () => {
+    let progressBar = this.add.graphics()
+    let progressBox = this.add.graphics()
+    progressBox.fillStyle(0x222222, 0.8)
+    progressBox.fillRect(440, 370, 320, 50)
+
+    this.load.on('progress', val => {
       this.loadImage = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'loading')
       this.loading = this.add.text(
         this.sys.game.canvas.width / 2 - 65,
@@ -114,6 +124,9 @@ export default class Level1 extends Phaser.Scene {
           color: '#F0F7FF'
         }
       )
+      progressBar.clear()
+      progressBar.fillStyle(0xffffff, 1)
+      progressBar.fillRect(440, 370, 300 * val, 30)
     })
 
     this.load.on('complete', () => {
