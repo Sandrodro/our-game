@@ -42,10 +42,10 @@ export let horizontalMoverMovement = (variable, cl, spriteWidth) => {
   if (variable) {
     if (variable.x > cl.physicsWidth - (spriteWidth * 2) / 3) {
       variable.setY(variable.y + (Math.random() > 0.35 ? 30 : -25))
-      variable.setVelocity(-200, 0)
+      variable.setVelocity(variable.body.velocity.x, 0)
     } else if (variable.x < (spriteWidth * 2) / 3) {
       variable.setY(variable.y + (Math.random() > 0.35 ? 30 : -25))
-      variable.setVelocity(200, 0)
+      variable.setVelocity(variable.body.velocity.x, 0)
     }
   }
 }

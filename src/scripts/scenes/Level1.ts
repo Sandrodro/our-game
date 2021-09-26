@@ -1,4 +1,11 @@
-import { createBomb, createHelper, createCanvas, createPlayer, createPowerUp } from '../functions/objectCreator'
+import {
+  increaseVelocity,
+  createBomb,
+  createHelper,
+  createCanvas,
+  createPlayer,
+  createPowerUp
+} from '../functions/objectCreator'
 
 import { verticalMoverMovement, horizontalMoverMovement, createKeys, playerMove } from '../functions/movement'
 
@@ -78,6 +85,9 @@ export default class Level1 extends Phaser.Scene {
   left
   right
 
+  space
+  pauseState = 'running'
+
   worldSpeedUp
 
   loading
@@ -108,12 +118,10 @@ export default class Level1 extends Phaser.Scene {
       frameHeight: 71
     })
 
-    let progressBar = this.add.graphics()
-    let progressBox = this.add.graphics()
-    progressBox.fillStyle(0x222222, 0.8)
-    progressBox.fillRect(440, 370, 320, 50)
+    let backRect
+    let loadRect
 
-    this.load.on('progress', val => {
+    this.load.on('start', val => {
       this.loadImage = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'loading')
       this.loading = this.add.text(
         this.sys.game.canvas.width / 2 - 65,
@@ -124,9 +132,12 @@ export default class Level1 extends Phaser.Scene {
           color: '#F0F7FF'
         }
       )
-      progressBar.clear()
-      progressBar.fillStyle(0xffffff, 1)
-      progressBar.fillRect(440, 370, 300 * val, 30)
+      backRect = this.add.rectangle(560, this.sys.game.canvas.height / 2 + 250, 200, 50, 0xff78ab, 1)
+      loadRect = this.add.rectangle(560, this.sys.game.canvas.height / 2 + 250, 1, 40, 0xffffff, 1)
+    })
+
+    this.load.on('progress', val => {
+      loadRect.displayWidth = val * 200
     })
 
     this.load.on('complete', () => {
@@ -214,6 +225,33 @@ export default class Level1 extends Phaser.Scene {
     let types = ['speed', 'lives', 'shield']
     let randomPowerUp = Math.floor(Math.random() * 3)
     this.speedPowerUp = createPowerUp(this, types[randomPowerUp])
+
+    this.space = this.input.keyboard.addKey('SPACE')
+
+    this.space.on('down', () => {
+      if (this.pauseState == 'running') {
+        this.physics.pause()
+        this.pauseState = 'paused'
+      } else {
+        this.physics.resume()
+        this.pauseState = 'running'
+      }
+    })
+    // როცა ნიტა პაუზის დიზაინს მოგცემს, ახალი სცენა გააკეთე პაუზისთვის და პაუზის გამოჩენისას
+    // ამ სცენას დააპაუზებ, გადახვალ პაუზის სცენაში და მერე რიზიუმ თუ მოგინდება
+    // პაუზის სცენიდან გააგრძელებ ამ სცენას
+
+    let acc = this.time.addEvent({
+      delay: 7000,
+      callback: () => {
+        increaseVelocity(this.bomb2)
+        increaseVelocity(this.bomb)
+        increaseVelocity(this.helper)
+        increaseVelocity(this.horizontal_mover)
+      },
+      callbackScope: this,
+      loop: true
+    })
   }
 
   update() {
@@ -225,10 +263,12 @@ export default class Level1 extends Phaser.Scene {
     if (this.bonusNumber == this.bonusRequired) {
       this.worldSpeedUp = 0
       this.shieldActive = false
+      this.pauseState = 'running'
       this.scene.start('Win1', { messages: this.messages, level: this.level })
     } else if (this.lives == 0) {
       this.worldSpeedUp = 0
       this.shieldActive = false
+      this.pauseState = 'running'
       this.scene.start('Lose1', { messages: this.messages, level: this.level })
     }
 

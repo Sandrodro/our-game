@@ -43,6 +43,20 @@ export let createBomb = (group, variable, cl, image, x, y, xVel, yVel, scale = 1
   return variable
 }
 
+export let increaseVelocity = variable => {
+  if (variable.body.velocity.x > 0) {
+    variable.body.setVelocityX(variable.body.velocity.x + 23)
+  } else if (variable.body.velocity.x < 0) {
+    variable.body.setVelocityX(variable.body.velocity.x - 23)
+  }
+
+  if (variable.body.velocity.y > 0) {
+    variable.body.setVelocityY(variable.body.velocity.y + 23)
+  } else if (variable.body.velocity.y < 0) {
+    variable.body.setVelocityY(variable.body.velocity.y - 23)
+  }
+}
+
 export let createHelper = (group, variable, cl, image, x, y, xVel, yVel, scale = 1) => {
   if (group.getLength() == 0) {
     variable = group.get(false, false, image)

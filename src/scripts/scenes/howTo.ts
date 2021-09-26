@@ -4,6 +4,8 @@ export default class howTo extends Phaser.Scene {
   }
 
   create() {
+    let space = this.input.keyboard.addKey('SPACE')
+
     this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'howTo')
 
     let rect = this.add.rectangle(985, 537, 110, 70, 0xf66712, 0).setInteractive({
@@ -11,6 +13,10 @@ export default class howTo extends Phaser.Scene {
     })
 
     rect.on('pointerdown', () => {
+      this.scene.start('Menu')
+    })
+
+    space.on('down', () => {
       this.scene.start('Menu')
     })
   }

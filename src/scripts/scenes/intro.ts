@@ -9,6 +9,8 @@ export default class Intro extends Phaser.Scene {
   }
 
   create() {
+    let space = this.input.keyboard.addKey('SPACE')
+
     this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'intro')
 
     let rect = this.add.rectangle(this.sys.canvas.width / 2, 423, 110, 70, 0xf66712, 0).setInteractive({
@@ -16,6 +18,10 @@ export default class Intro extends Phaser.Scene {
     })
 
     rect.on('pointerdown', () => {
+      this.scene.start('howTo')
+    })
+
+    space.on('down', () => {
       this.scene.start('howTo')
     })
   }
