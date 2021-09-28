@@ -17,11 +17,19 @@ export let createBomb = (group, variable, cl, image, x, y, xVel, yVel, scale = 1
         window.setTimeout(() => {
           splash.destroy()
         }, 130)
-        window.setTimeout(() => {
-          if (cl.bonusNumber != cl.bonusRequired) {
-            createBomb(group, variable, cl, image, x, y, xVel, yVel, scale)
-          }
-        }, 2000)
+        if (cl.bonusNumber != cl.bonusRequired && cl.lives > 0) {
+          window.setTimeout(() => {
+            if (cl.bonusNumber != cl.bonusRequired && cl.lives > 0) {
+              createBomb(group, variable, cl, image, x, y, xVel, yVel, scale)
+            }
+          }, 2000)
+        }
+        if (cl.bonusNumber != cl.bonusRequired && cl.lives > 0) {
+          cl.scene.pause()
+          window.setTimeout(() => {
+            cl.scene.resume()
+          }, 1300)
+        }
       }
     },
     null,
@@ -29,17 +37,19 @@ export let createBomb = (group, variable, cl, image, x, y, xVel, yVel, scale = 1
   )
   let portal = cl.add.image(x, y, 'portal').setScale(5)
 
-  window.setTimeout(() => {
-    variable.setX(x)
-    variable.setY(y)
-    variable.setActive(true)
-    variable.setVisible(true)
-    variable.setScale(scale)
-    variable.setBounce(1)
-    variable.setCollideWorldBounds(true)
-    variable.setVelocity(xVel, yVel)
-    portal.destroy()
-  }, 400)
+  if (cl.bonusNumber != cl.bonusRequired && cl.lives > 0) {
+    window.setTimeout(() => {
+      variable.setX(x)
+      variable.setY(y)
+      variable.setActive(true)
+      variable.setVisible(true)
+      variable.setScale(scale)
+      variable.setBounce(1)
+      variable.setCollideWorldBounds(true)
+      variable.setVelocity(xVel, yVel)
+      portal.destroy()
+    }, 400)
+  }
   return variable
 }
 
@@ -73,11 +83,19 @@ export let createHelper = (group, variable, cl, image, x, y, xVel, yVel, scale =
       window.setTimeout(() => {
         splash.destroy()
       }, 130)
-      window.setTimeout(() => {
-        if (cl.bonusNumber != cl.bonusRequired) {
-          createHelper(group, variable, cl, image, x, y, xVel, yVel, scale)
-        }
-      }, 2600)
+      if (cl.bonusNumber != cl.bonusRequired && cl.lives > 0) {
+        window.setTimeout(() => {
+          if (cl.bonusNumber != cl.bonusRequired && cl.lives > 0) {
+            createHelper(group, variable, cl, image, x, y, xVel, yVel, scale)
+          }
+        }, 2600)
+      }
+      if (cl.bonusNumber != cl.bonusRequired && cl.lives > 0) {
+        cl.scene.pause()
+        window.setTimeout(() => {
+          cl.scene.resume()
+        }, 1300)
+      }
     },
     null,
     cl
@@ -85,18 +103,19 @@ export let createHelper = (group, variable, cl, image, x, y, xVel, yVel, scale =
 
   let portal = cl.add.image(x, y, 'portal').setScale(5)
   portal.setTint(0x60ac23)
-
-  window.setTimeout(() => {
-    variable.setX(x)
-    variable.setY(y)
-    variable.setActive(true)
-    variable.setVisible(true)
-    variable.setScale(scale)
-    variable.setBounce(1)
-    variable.setCollideWorldBounds(true)
-    variable.setVelocity(xVel, yVel)
-    portal.destroy()
-  }, 400)
+  if (cl.bonusNumber != cl.bonusRequired && cl.lives > 0) {
+    window.setTimeout(() => {
+      variable.setX(x)
+      variable.setY(y)
+      variable.setActive(true)
+      variable.setVisible(true)
+      variable.setScale(scale)
+      variable.setBounce(1)
+      variable.setCollideWorldBounds(true)
+      variable.setVelocity(xVel, yVel)
+      portal.destroy()
+    }, 400)
+  }
   return variable
 }
 
@@ -212,6 +231,21 @@ export let hitHelper = cl => {
     }
   })
 
+  let popMessage = new Phaser.GameObjects.Text(cl, cl.physicsWidth / 2 - 200, cl.sys.canvas.height / 2, t, {
+    fontSize: '27px',
+    color: '#068866',
+    fontFamily: 'BPG_Banner_QuadroSquare',
+    wordWrap: {
+      width: 750
+    }
+  })
+
+  cl.add.existing(popMessage)
+
+  window.setTimeout(() => {
+    popMessage.destroy()
+  }, 1300)
+
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
@@ -253,6 +287,21 @@ export let hitObstacle = cl => {
       width: cl.gameWidth - cl.physicsWidth - 10
     }
   })
+
+  let popMessage = new Phaser.GameObjects.Text(cl, cl.physicsWidth / 2 - 200, cl.sys.canvas.height / 2, t, {
+    fontSize: '27px',
+    color: '#ff3d32',
+    fontFamily: 'BPG_Banner_QuadroSquare',
+    wordWrap: {
+      width: 750
+    }
+  })
+
+  cl.add.existing(popMessage)
+
+  window.setTimeout(() => {
+    popMessage.destroy()
+  }, 1300)
 
   cl.messages.unshift(message)
 
