@@ -210,6 +210,7 @@ export let createPlayer = cl => {
 }
 
 export let hitHelper = cl => {
+  cl.bonusNumber += 1
   let t
   if (cl.level == 'job') {
     t = jobText.helperText[Math.floor(Math.random() * jobText.helperText.length)]
@@ -217,10 +218,7 @@ export let hitHelper = cl => {
       t = jobText.helperText[Math.floor(Math.random() * jobText.helperText.length)]
     }
   } else if (cl.level == 'house') {
-    t = apartmentText.helperText[Math.floor(Math.random() * apartmentText.helperText.length)]
-    if (cl.messages.includes(t)) {
-      t = apartmentText.helperText[Math.floor(Math.random() * apartmentText.helperText.length)]
-    }
+    t = apartmentText.helperText[cl.bonusNumber - 1]
   }
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
     fontSize: cl.level == 'house' ? '21px' : '23px',
@@ -231,6 +229,7 @@ export let hitHelper = cl => {
     }
   })
 
+  let popBG = cl.add.rectangle(cl.physicsWidth / 2 + 135, cl.sys.canvas.height / 2 + 30, 840, 110, 0x0b1b2d, 0.7)
   let popMessage = new Phaser.GameObjects.Text(cl, cl.physicsWidth / 2 - 200, cl.sys.canvas.height / 2, t, {
     fontSize: '27px',
     color: '#068866',
@@ -244,6 +243,7 @@ export let hitHelper = cl => {
 
   window.setTimeout(() => {
     popMessage.destroy()
+    popBG.destroy()
   }, 1300)
 
   cl.messages.unshift(message)
@@ -255,8 +255,6 @@ export let hitHelper = cl => {
       cl.add.existing(text)
     }
   })
-
-  cl.bonusNumber += 1
   cl.bonusGroup.children.entries[cl.bonusNumber - 1].setTexture('bonusCount')
 
   cl.player.setTint(0x068866)
@@ -266,6 +264,7 @@ export let hitHelper = cl => {
 }
 
 export let hitObstacle = cl => {
+  cl.hitNumber += 1
   let t
   if (cl.level == 'job') {
     t = jobText.bombText[Math.floor(Math.random() * jobText.bombText.length)]
@@ -274,9 +273,10 @@ export let hitObstacle = cl => {
     }
   }
   if (cl.level == 'house') {
-    t = apartmentText.bombText[Math.floor(Math.random() * apartmentText.bombText.length)]
-    if (cl.messages.includes(t)) {
-      t = apartmentText.bombText[Math.floor(Math.random() * apartmentText.bombText.length)]
+    if (cl.hitNumber < 7) {
+      t = apartmentText.bombText[cl.hitNumber - 1]
+    } else {
+      t = apartmentText.bombText[7]
     }
   }
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
@@ -288,6 +288,7 @@ export let hitObstacle = cl => {
     }
   })
 
+  let popBG = cl.add.rectangle(cl.physicsWidth / 2 + 135, cl.sys.canvas.height / 2 + 30, 840, 110, 0x0b1b2d, 0.7)
   let popMessage = new Phaser.GameObjects.Text(cl, cl.physicsWidth / 2 - 200, cl.sys.canvas.height / 2, t, {
     fontSize: '27px',
     color: '#ff3d32',
@@ -301,6 +302,7 @@ export let hitObstacle = cl => {
 
   window.setTimeout(() => {
     popMessage.destroy()
+    popBG.destroy()
   }, 1300)
 
   cl.messages.unshift(message)

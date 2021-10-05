@@ -51,6 +51,8 @@ export default class Level1 extends Phaser.Scene {
   lives = 3
   liveGroup
 
+  hitNumber = 0
+
   bonusNumber = 0
   bonusText
   bonusGroup
@@ -109,6 +111,7 @@ export default class Level1 extends Phaser.Scene {
     this.load.image('horizontalBomb', 'assets/horizontalBomb.png')
     this.load.image('bomb2', 'assets/bomb2.png')
     this.load.image('bomb', 'assets/bomb.png')
+    this.load.image('pause', 'assets/pause.png')
     this.load.image('bonusCount', 'assets/randomBonus.png')
     this.load.spritesheet('dudeSheet', 'assets/dudeSheet.png', {
       frameWidth: 50,
@@ -216,13 +219,42 @@ export default class Level1 extends Phaser.Scene {
 
     this.space = this.input.keyboard.addKey('SPACE')
 
+    let pauseScreen
+    let cont
+    let menu
     this.space.on('down', () => {
       if (this.pauseState == 'running') {
         this.physics.pause()
         this.pauseState = 'paused'
+        pauseScreen = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'pause')
+        cont = this.add.rectangle(615, this.sys.game.canvas.height / 2, 293, 90, 0xde3eed, 0).setInteractive({
+          useHandCursor: true
+        })
+        menu = this.add.rectangle(1030, this.sys.game.canvas.height / 2, 293, 90, 0xde3eed, 0).setInteractive({
+          useHandCursor: true
+        })
+
+        cont.on('pointerdown', () => {
+          this.physics.resume()
+          this.pauseState = 'running'
+          pauseScreen.destroy()
+          menu.destroy()
+          cont.destroy()
+        })
+
+        menu.on('pointerdown', () => {
+          this.scene.start('Menu')
+          this.pauseState = 'running'
+          pauseScreen.destroy()
+          menu.destroy()
+          cont.destroy()
+        })
       } else {
         this.physics.resume()
         this.pauseState = 'running'
+        pauseScreen.destroy()
+        menu.destroy()
+        cont.destroy()
       }
     })
     // როცა ნიტა პაუზის დიზაინს მოგცემს, ახალი სცენა გააკეთე პაუზისთვის და პაუზის გამოჩენისას
@@ -250,18 +282,21 @@ export default class Level1 extends Phaser.Scene {
 
     if (this.bonusNumber == this.bonusRequired) {
       this.worldSpeedUp = 0
+      this.hitNumber = 0
       this.shieldActive = false
       this.pauseState = 'running'
       this.scene.start('Win1', { messages: this.messages, level: this.level })
     } else if (this.lives == 0) {
       this.worldSpeedUp = 0
+      this.hitNumber = 0
       this.shieldActive = false
       this.pauseState = 'running'
       this.scene.start('Lose1', { messages: this.messages, level: this.level })
     }
 
-    this.yScroll += 2
-
-    this.background.setTilePosition(0, this.yScroll)
+    if (this.pauseState == 'running') {
+      this.yScroll += 2
+      this.background.setTilePosition(0, this.yScroll)
+    }
   }
 }
