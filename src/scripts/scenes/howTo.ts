@@ -8,7 +8,7 @@ export default class howTo extends Phaser.Scene {
 
     this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'howTo')
 
-    let rect = this.add.rectangle(985, 537, 110, 70, 0xf66712, 0).setInteractive({
+    let rect = this.add.rectangle(1477, 804, 160, 100, 0xf66712, 0).setInteractive({
       useHandCursor: true
     })
 

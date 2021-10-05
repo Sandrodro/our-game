@@ -22,8 +22,8 @@ export default class Win extends Phaser.Scene {
       }
     })
     this.displayMessages.reverse().forEach((message, index) => {
-      let text = this.add.text((message.width * 2) / 3, 250 + index * 80, message._text, {
-        fontSize: '23px',
+      let text = this.add.text((message.width * 2) / 3, 320 + index * 95, message._text, {
+        fontSize: '29px',
         fontFamily: 'BPG_Banner_QuadroSquare',
         align: 'center',
         wordWrap: {
@@ -34,7 +34,7 @@ export default class Win extends Phaser.Scene {
       text.setX(this.sys.game.canvas.width / 2 - text.width / 2)
     })
 
-    let nextRect = this.add.rectangle(993, 525, 130, 86, 0xde3eed, 0).setInteractive({
+    let nextRect = this.add.rectangle(1508, 805, 175, 106, 0xde3eed, 0).setInteractive({
       useHandCursor: true
     })
 

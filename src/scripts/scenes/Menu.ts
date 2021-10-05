@@ -13,10 +13,10 @@ export default class Menu extends Phaser.Scene {
 
   create() {
     this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'levelSelect')
-    let jobRect = this.add.rectangle(385, 283, 245, 153, 0xde3eed, 0).setInteractive({
+    let jobRect = this.add.rectangle(571, 426, 370, 228, 0xde3eed, 0).setInteractive({
       useHandCursor: true
     })
-    let apartmentRect = this.add.rectangle(715, 282, 245, 153, 0xff0000, 0).setInteractive({
+    let apartmentRect = this.add.rectangle(1081, 426, 370, 228, 0xff0000, 0).setInteractive({
       useHandCursor: true
     })
 

@@ -13,7 +13,7 @@ export let createBomb = (group, variable, cl, image, x, y, xVel, yVel, scale = 1
         variable.setVisible(false)
         collider.destroy()
         hitObstacle(cl)
-        let splash = cl.add.image(variable.x, variable.y, 'splashBomb').setScale(0.3)
+        let splash = cl.add.image(variable.x, variable.y, 'splashBomb').setScale(0.4)
         window.setTimeout(() => {
           splash.destroy()
         }, 130)
@@ -35,7 +35,7 @@ export let createBomb = (group, variable, cl, image, x, y, xVel, yVel, scale = 1
     null,
     cl
   )
-  let portal = cl.add.image(x, y, 'portal').setScale(5)
+  let portal = cl.add.image(x, y, 'portal').setScale(6)
 
   if (cl.bonusNumber != cl.bonusRequired && cl.lives > 0) {
     window.setTimeout(() => {
@@ -79,7 +79,7 @@ export let createHelper = (group, variable, cl, image, x, y, xVel, yVel, scale =
       variable.setVisible(false)
       collider.destroy()
       hitHelper(cl)
-      let splash = cl.add.image(variable.x, variable.y, 'splashBonus').setScale(0.2)
+      let splash = cl.add.image(variable.x, variable.y, 'splashBonus').setScale(0.3)
       window.setTimeout(() => {
         splash.destroy()
       }, 130)
@@ -172,7 +172,7 @@ export let createPowerUp = (cl, type) => {
 }
 
 export let createCanvas = (cl, imageName) => {
-  let sky = cl.add.tileSprite(400, 300, 800, 600, imageName)
+  let sky = cl.add.tileSprite(600, 450, 1200, 900, imageName)
   cl.physicsWidth = sky.width
   cl.physicsHeight = sky.height
   cl.physics.world.setBounds(0, 0, cl.physicsWidth, cl.physicsHeight)
@@ -205,7 +205,7 @@ export let createPlayer = cl => {
   cl.player = cl.physics.add.sprite(400, 550, 'dudeSheet').setFrame(0)
   cl.player.setBounce(0.2)
   cl.player.setCollideWorldBounds(true)
-  cl.player.setScale(0.9)
+  cl.player.setScale(1.2)
   return cl.player
 }
 
@@ -223,7 +223,7 @@ export let hitHelper = cl => {
     }
   }
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
-    fontSize: cl.level == 'house' ? '16px' : '18px',
+    fontSize: cl.level == 'house' ? '21px' : '23px',
     color: '#068866',
     fontFamily: 'BPG_Banner_QuadroSquare',
     wordWrap: {
@@ -249,7 +249,7 @@ export let hitHelper = cl => {
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * (cl.level == 'house' ? 87 : 90) + 15)
+    text.setY(index * (cl.level == 'house' ? 100 : 100) + 20)
 
     if (text.displayList == null) {
       cl.add.existing(text)
@@ -280,7 +280,7 @@ export let hitObstacle = cl => {
     }
   }
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
-    fontSize: cl.level == 'house' ? '15px' : '18px',
+    fontSize: cl.level == 'house' ? '21px' : '23px',
     fontFamily: 'BPG_Banner_QuadroSquare',
     color: '#ff3d32',
     wordWrap: {
@@ -306,7 +306,7 @@ export let hitObstacle = cl => {
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * (cl.level == 'house' ? 87 : 90) + 15)
+    text.setY(index * (cl.level == 'house' ? 100 : 100) + 20)
 
     if (text.displayList == null) {
       cl.add.existing(text)

@@ -6,7 +6,7 @@ export default class jobLose2 extends Phaser.Scene {
   create() {
     this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'loseJob')
 
-    let restartRect = this.add.rectangle(this.sys.game.canvas.width / 2, 526, 110, 70, 0xf89120, 0).setInteractive({
+    let restartRect = this.add.rectangle(this.sys.game.canvas.width / 2, 792, 160, 100, 0xf89120, 0).setInteractive({
       useHandCursor: true
     })
 

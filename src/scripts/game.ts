@@ -11,8 +11,8 @@ import jobWin2 from './scenes/jobWin2'
 import Intro from './scenes/intro'
 import howTo from './scenes/howTo'
 
-const DEFAULT_WIDTH = 1100
-const DEFAULT_HEIGHT = 600
+const DEFAULT_WIDTH = 1650
+const DEFAULT_HEIGHT = 900
 
 const config = {
   type: Phaser.AUTO,
@@ -24,7 +24,7 @@ const config = {
   height: DEFAULT_HEIGHT,
   backgroundColor: '#ffffff',
   parent: 'phaser-game',
-  scene: [Intro, Menu, howTo, Level1, Level2, Win1, Lose1, homeLose2, jobLose2, homeWin2, jobWin2],
+  scene: [Intro, howTo, Menu, Level1, Level2, Win1, Lose1, homeLose2, jobLose2, homeWin2, jobWin2],
   physics: {
     default: 'arcade'
   }

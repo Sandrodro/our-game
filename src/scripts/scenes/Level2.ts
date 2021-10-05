@@ -85,8 +85,6 @@ export default class Level1 extends Phaser.Scene {
   left
   right
 
-  loading
-
   worldSpeedUp
 
   preload() {
@@ -104,7 +102,7 @@ export default class Level1 extends Phaser.Scene {
     this.load.image('splashBonus', 'assets/bonusSplash.png')
     this.load.image('commentBG', 'assets/commentBG.png')
     this.load.image('homeBack', 'assets/homeBG.png')
-    this.load.image('bonusHome', 'assets/bonus2.png')
+    this.load.image('bonus1', 'assets/bonus2.png')
     this.load.image('verticalBomb', 'assets/verticalBomb.png')
     this.load.image('horizontalBomb', 'assets/horizontalBomb.png')
     this.load.image('bomb2', 'assets/bomb2.png')
@@ -120,17 +118,22 @@ export default class Level1 extends Phaser.Scene {
 
     this.load.on('start', val => {
       this.loadImage = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'loading')
-      this.loading = this.add.text(
-        this.sys.game.canvas.width / 2 - 65,
-        this.sys.game.canvas.height / 2 + 150,
-        'LOADING',
-        {
-          fontSize: '32px',
-          color: '#F0F7FF'
-        }
+      backRect = this.add.rectangle(
+        this.sys.game.canvas.width / 2,
+        this.sys.game.canvas.height / 2 + 250,
+        200,
+        50,
+        0xff78ab,
+        1
       )
-      backRect = this.add.rectangle(560, this.sys.game.canvas.height / 2 + 250, 200, 50, 0xff78ab, 1)
-      loadRect = this.add.rectangle(560, this.sys.game.canvas.height / 2 + 250, 1, 40, 0xffffff, 1)
+      loadRect = this.add.rectangle(
+        this.sys.game.canvas.width / 2,
+        this.sys.game.canvas.height / 2 + 250,
+        1,
+        40,
+        0xffffff,
+        1
+      )
     })
 
     this.load.on('progress', val => {
@@ -138,7 +141,6 @@ export default class Level1 extends Phaser.Scene {
     })
 
     this.load.on('complete', () => {
-      this.loading.destroy()
       this.loadImage.destroy()
     })
   }
@@ -149,7 +151,7 @@ export default class Level1 extends Phaser.Scene {
     this.messages = []
 
     this.background = createCanvas(this, 'homeBack')
-    this.add.image(950, 300, 'commentBG')
+    this.add.image(1425, 450, 'commentBG')
     createKeys(this)
 
     // player
@@ -159,17 +161,7 @@ export default class Level1 extends Phaser.Scene {
       defaultKey: 'bomb'
     })
 
-    this.bomb = createBomb(
-      this.bombGroup,
-      this.bomb,
-      this,
-      'bomb',
-      Math.random() * 500,
-      Math.random() * 400,
-      250,
-      250,
-      0.8
-    )
+    this.bomb = createBomb(this.bombGroup, this.bomb, this, 'bomb', Math.random() * 500, Math.random() * 400, 300, 300)
     this.bomb2Group = this.physics.add.group({
       defaultKey: 'bomb2'
     })
@@ -180,9 +172,8 @@ export default class Level1 extends Phaser.Scene {
       'bomb2',
       Math.random() * 500 + 200,
       Math.random() * 200,
-      -250,
-      -350,
-      0.8
+      -300,
+      -400
     )
 
     this.horizontal_moverGroup = this.physics.add.group({
@@ -195,9 +186,8 @@ export default class Level1 extends Phaser.Scene {
       'horizontalBomb',
       50,
       50,
-      280,
-      0,
-      0.9
+      320,
+      0
     )
 
     this.vertical_moverGroup = this.physics.add.group({
@@ -211,23 +201,12 @@ export default class Level1 extends Phaser.Scene {
       70,
       500,
       0,
-      260,
-      0.8
+      300
     )
     this.helperGroup = this.physics.add.group({
-      defaultKey: 'bonusHome'
+      defaultKey: 'bonus1'
     })
-    this.helper = createHelper(
-      this.helperGroup,
-      this.helper,
-      this,
-      'bonusHome',
-      Math.random() * 600,
-      200,
-      300,
-      300,
-      1.1
-    )
+    this.helper = createHelper(this.helperGroup, this.helper, this, 'bonus1', Math.random() * 600, 200, 300, 300)
     let types = ['speed', 'lives', 'shield']
     let randomPowerUp = Math.floor(Math.random() * 3)
     this.speedPowerUp = createPowerUp(this, types[randomPowerUp])
