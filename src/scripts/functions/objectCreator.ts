@@ -202,7 +202,7 @@ export let createCanvas = (cl, imageName) => {
 }
 
 export let createPlayer = cl => {
-  cl.player = cl.physics.add.sprite(400, 550, 'dudeSheet').setFrame(0)
+  cl.player = cl.physics.add.sprite(600, 750, 'dudeSheet').setFrame(0)
   cl.player.setBounce(0.2)
   cl.player.setCollideWorldBounds(true)
   cl.player.setScale(1.2)
