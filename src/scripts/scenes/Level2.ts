@@ -54,7 +54,7 @@ export default class Level1 extends Phaser.Scene {
   bonusText
   bonusGroup
 
-  bonusRequired = 3
+  bonusRequired = 5
 
   speedUp = 0
 
@@ -149,6 +149,7 @@ export default class Level1 extends Phaser.Scene {
   }
 
   create() {
+    this.hitNumber = 0
     this.lives = 3
     this.bonusNumber = 0
     this.messages = []

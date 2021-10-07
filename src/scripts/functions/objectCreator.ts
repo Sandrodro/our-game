@@ -191,7 +191,7 @@ export let createCanvas = (cl, imageName) => {
   })
   cl.bonusGroup = cl.add.group({
     key: 'bonusCircle',
-    repeat: 2,
+    repeat: cl.bonusRequired - 1,
     setXY: {
       x: 40,
       y: 95,
@@ -211,6 +211,7 @@ export let createPlayer = cl => {
 
 export let hitHelper = cl => {
   cl.bonusNumber += 1
+  cl.hitNumber = 0
   let t
   if (cl.level == 'job') {
     t = jobText.helperText[Math.floor(Math.random() * jobText.helperText.length)]
@@ -264,7 +265,6 @@ export let hitHelper = cl => {
 }
 
 export let hitObstacle = cl => {
-  cl.hitNumber += 1
   let t
   if (cl.level == 'job') {
     t = jobText.bombText[Math.floor(Math.random() * jobText.bombText.length)]
@@ -273,12 +273,13 @@ export let hitObstacle = cl => {
     }
   }
   if (cl.level == 'house') {
-    if (cl.hitNumber < 7) {
-      t = apartmentText.bombText[cl.hitNumber - 1]
+    if (cl.hitNumber <= 2) {
+      t = apartmentText.bombText[cl.bonusNumber][cl.hitNumber]
     } else {
-      t = apartmentText.bombText[7]
+      t = apartmentText.bombText[cl.bonusNumber[2]]
     }
   }
+  cl.hitNumber += 1
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
     fontSize: cl.level == 'house' ? '21px' : '23px',
     fontFamily: 'BPG_Banner_QuadroSquare',

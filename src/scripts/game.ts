@@ -10,7 +10,6 @@ import homeWin2 from './scenes/homeWin2'
 import jobWin2 from './scenes/jobWin2'
 import Intro from './scenes/intro'
 import howTo from './scenes/howTo'
-import About from './scenes/about'
 
 const DEFAULT_WIDTH = 1650
 const DEFAULT_HEIGHT = 900
@@ -25,7 +24,7 @@ const config = {
   height: DEFAULT_HEIGHT,
   backgroundColor: '#ffffff',
   parent: 'phaser-game',
-  scene: [Intro, About, howTo, Menu, Level1, Level2, Win1, Lose1, homeLose2, jobLose2, homeWin2, jobWin2],
+  scene: [Intro, howTo, Menu, Level1, Level2, Win1, Lose1, homeLose2, jobLose2, homeWin2, jobWin2],
   physics: {
     default: 'arcade'
   }

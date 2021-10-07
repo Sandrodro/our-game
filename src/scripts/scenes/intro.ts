@@ -6,7 +6,6 @@ export default class Intro extends Phaser.Scene {
   preload() {
     this.load.image('intro', 'assets/Intro.png')
     this.load.image('howTo', 'assets/howtoplay.png')
-    this.load.image('about', 'assets/about.png')
   }
 
   create() {
@@ -16,14 +15,6 @@ export default class Intro extends Phaser.Scene {
 
     let rect = this.add.rectangle(699, 703, 170, 110, 0xf66712, 0).setInteractive({
       useHandCursor: true
-    })
-
-    let about = this.add.rectangle(932, 703, 184, 110, 0xf66712, 0).setInteractive({
-      useHandCursor: true
-    })
-
-    about.on('pointerdown', () => {
-      this.scene.start('about')
     })
 
     rect.on('pointerdown', () => {
