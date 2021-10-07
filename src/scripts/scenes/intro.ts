@@ -13,7 +13,7 @@ export default class Intro extends Phaser.Scene {
 
     this.add.image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, 'intro')
 
-    let rect = this.add.rectangle(this.sys.canvas.width / 2, 633, 170, 110, 0xf66712, 0).setInteractive({
+    let rect = this.add.rectangle(this.sys.canvas.width / 2, 703, 170, 110, 0xf66712, 0).setInteractive({
       useHandCursor: true
     })
 
