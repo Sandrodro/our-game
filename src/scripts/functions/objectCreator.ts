@@ -68,9 +68,13 @@ export let increaseVelocity = variable => {
 }
 
 export let createHelper = (group, variable, cl, image, x, y, xVel, yVel, scale = 1) => {
+  let bonusNames = ['bonus1', 'bonusBlue', 'bonusTarq', 'bonusSky', 'bonusGreen']
+
   if (group.getLength() == 0) {
     variable = group.get(false, false, image)
   }
+
+  variable.setTexture(bonusNames[cl.bonusNumber])
   let collider = cl.physics.add.overlap(
     cl.player,
     group,
@@ -256,7 +260,8 @@ export let hitHelper = cl => {
       cl.add.existing(text)
     }
   })
-  cl.bonusGroup.children.entries[cl.bonusNumber - 1].setTexture('bonusCount')
+  let bonusNames = ['bonus1', 'bonusBlue', 'bonusTarq', 'bonusSky', 'bonusGreen']
+  cl.bonusGroup.children.entries[cl.bonusNumber - 1].setTexture(bonusNames[cl.bonusNumber - 1]).setScale(0.7)
 
   cl.player.setTint(0x068866)
   window.setTimeout(() => {

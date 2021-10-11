@@ -101,8 +101,11 @@ export default class Level1 extends Phaser.Scene {
     this.load.image('shieldUP', 'assets/shieldUP.png')
     this.load.image('liveIcon', 'assets/liveIcon.png')
     this.load.image('splashBomb', 'assets/splash.png')
+    this.load.image('bonusBlue', 'assets/bonus-blue.png')
+    this.load.image('bonusTarq', 'assets/bonus-tarq.png')
     this.load.image('splashBonus', 'assets/bonusSplash.png')
     this.load.image('commentBG', 'assets/commentBG.png')
+    this.load.image('bonusSky', 'assets/bonus-sky.png')
     this.load.image('homeBack', 'assets/homeBG.png')
     this.load.image('bonus1', 'assets/bonus2.png')
     this.load.image('verticalBomb', 'assets/verticalBomb.png')
@@ -110,7 +113,7 @@ export default class Level1 extends Phaser.Scene {
     this.load.image('bomb2', 'assets/bomb2.png')
     this.load.image('bomb', 'assets/bomb.png')
     this.load.image('pause', 'assets/pause.png')
-    this.load.image('bonusCount', 'assets/randomBonus.png')
+    this.load.image('bonusGreen', 'assets/bonus-green.png')
     this.load.spritesheet('dudeSheet', 'assets/dudeSheet.png', {
       frameWidth: 50,
       frameHeight: 71
@@ -123,7 +126,7 @@ export default class Level1 extends Phaser.Scene {
       this.loadImage = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'loading')
       backRect = this.add.rectangle(
         this.sys.game.canvas.width / 2,
-        this.sys.game.canvas.height / 2 + 250,
+        this.sys.game.canvas.height / 2 + 310,
         200,
         50,
         0xff78ab,
@@ -131,7 +134,7 @@ export default class Level1 extends Phaser.Scene {
       )
       loadRect = this.add.rectangle(
         this.sys.game.canvas.width / 2,
-        this.sys.game.canvas.height / 2 + 250,
+        this.sys.game.canvas.height / 2 + 310,
         1,
         40,
         0xffffff,
