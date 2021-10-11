@@ -125,7 +125,7 @@ export let createHelper = (group, variable, cl, image, x, y, xVel, yVel, scale =
 
 export let createPowerUp = (cl, type) => {
   let imageName
-  let types = ['speed', 'lives', 'shield']
+  let types = !cl.liveUP ? ['speed', 'lives', 'shield'] : ['speed', 'shield']
   type == 'speed' ? (imageName = 'speedUP') : type == 'lives' ? (imageName = 'liveUP') : (imageName = 'shieldUP')
 
   let powerUp = cl.physics.add.sprite(
@@ -147,6 +147,7 @@ export let createPowerUp = (cl, type) => {
       } else if (type == 'lives') {
         cl.lives += 1
         cl.player.setTint(0x21edcb)
+        cl.liveUP = true
         let xLoc = cl.liveGroup.getLast(true).x + 70
         let yLoc = cl.liveGroup.getLast(true).y
         cl.liveGroup.create(xLoc, yLoc, 'liveIcon')
@@ -218,10 +219,7 @@ export let hitHelper = cl => {
   cl.hitNumber = 0
   let t
   if (cl.level == 'job') {
-    t = jobText.helperText[Math.floor(Math.random() * jobText.helperText.length)]
-    if (cl.messages.includes(t)) {
-      t = jobText.helperText[Math.floor(Math.random() * jobText.helperText.length)]
-    }
+    t = jobText.helperText[cl.bonusNumber - 1]
   } else if (cl.level == 'house') {
     t = apartmentText.helperText[cl.bonusNumber - 1]
   }
@@ -272,10 +270,7 @@ export let hitHelper = cl => {
 export let hitObstacle = cl => {
   let t
   if (cl.level == 'job') {
-    t = jobText.bombText[Math.floor(Math.random() * jobText.bombText.length)]
-    if (cl.messages.includes(t)) {
-      t = jobText.bombText[Math.floor(Math.random() * jobText.bombText.length)]
-    }
+    t = jobText.bombText[cl.hitNumber]
   }
   if (cl.level == 'house') {
     if (cl.hitNumber <= 2) {

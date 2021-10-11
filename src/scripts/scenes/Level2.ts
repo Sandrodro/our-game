@@ -73,6 +73,8 @@ export default class Level1 extends Phaser.Scene {
   background
   yScroll = 0
 
+  liveUP = false
+
   space
   pauseState = 'running'
 
@@ -152,6 +154,7 @@ export default class Level1 extends Phaser.Scene {
   }
 
   create() {
+    this.liveUP = false
     this.hitNumber = 0
     this.lives = 3
     this.bonusNumber = 0
@@ -285,12 +288,14 @@ export default class Level1 extends Phaser.Scene {
       this.worldSpeedUp = 0
       this.hitNumber = 0
       this.shieldActive = false
+      this.liveUP = false
       this.pauseState = 'running'
       this.scene.start('Win1', { messages: this.messages, level: this.level })
     } else if (this.lives == 0) {
       this.worldSpeedUp = 0
       this.hitNumber = 0
       this.shieldActive = false
+      this.liveUP = false
       this.pauseState = 'running'
       this.scene.start('Lose1', { messages: this.messages, level: this.level })
     }
