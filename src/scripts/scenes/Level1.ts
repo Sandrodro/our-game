@@ -279,6 +279,35 @@ export default class Level1 extends Phaser.Scene {
       callbackScope: this,
       loop: true
     })
+
+    let t =
+      'ქამინგაუთის შემდეგ სახლიდან გამოგაგდეს, ამჟამინდელ სამსახურში კი იმდენად ცოტას გიხდიან, ბინის ქირაზეც არ გყოფნის..'
+
+    this.physics.pause()
+    let popBG = this.add.rectangle(
+      this.physicsWidth / 2 + 135,
+      this.sys.canvas.height / 2 + 40,
+      840,
+      130,
+      0x0b1b2d,
+      0.7
+    )
+    let popMessage = new Phaser.GameObjects.Text(this, this.physicsWidth / 2 - 200, this.sys.canvas.height / 2, t, {
+      fontSize: '27px',
+      color: '#f3673c',
+      fontFamily: 'BPG_Banner_QuadroSquare',
+      wordWrap: {
+        width: 750
+      }
+    })
+
+    this.add.existing(popMessage)
+
+    setTimeout(() => {
+      this.physics.resume()
+      popBG.destroy()
+      popMessage.destroy()
+    }, 3000)
   }
 
   update() {

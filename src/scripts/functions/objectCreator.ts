@@ -28,7 +28,7 @@ export let createBomb = (group, variable, cl, image, x, y, xVel, yVel, scale = 1
           cl.scene.pause()
           window.setTimeout(() => {
             cl.scene.resume()
-          }, 1300)
+          }, 1500)
         }
       }
     },
@@ -98,7 +98,7 @@ export let createHelper = (group, variable, cl, image, x, y, xVel, yVel, scale =
         cl.scene.pause()
         window.setTimeout(() => {
           cl.scene.resume()
-        }, 1300)
+        }, 1500)
       }
     },
     null,
@@ -225,17 +225,17 @@ export let hitHelper = cl => {
   }
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
     fontSize: cl.level == 'house' ? '21px' : '23px',
-    color: '#068866',
+    color: '#4dbd94',
     fontFamily: 'BPG_Banner_QuadroSquare',
     wordWrap: {
       width: cl.gameWidth - cl.physicsWidth - 10
     }
   })
 
-  let popBG = cl.add.rectangle(cl.physicsWidth / 2 + 135, cl.sys.canvas.height / 2 + 30, 840, 110, 0x0b1b2d, 0.7)
+  let popBG = cl.add.rectangle(cl.physicsWidth / 2 + 135, cl.sys.canvas.height / 2 + 40, 840, 130, 0x0b1b2d, 0.7)
   let popMessage = new Phaser.GameObjects.Text(cl, cl.physicsWidth / 2 - 200, cl.sys.canvas.height / 2, t, {
     fontSize: '27px',
-    color: '#068866',
+    color: '#4dbd94',
     fontFamily: 'BPG_Banner_QuadroSquare',
     wordWrap: {
       width: 750
@@ -247,12 +247,12 @@ export let hitHelper = cl => {
   window.setTimeout(() => {
     popMessage.destroy()
     popBG.destroy()
-  }, 1300)
+  }, 1500)
 
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * (cl.level == 'house' ? 100 : 100) + 20)
+    text.setY(index * (cl.level == 'house' ? 110 : 110) + 30)
 
     if (text.displayList == null) {
       cl.add.existing(text)
@@ -283,16 +283,16 @@ export let hitObstacle = cl => {
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
     fontSize: cl.level == 'house' ? '21px' : '23px',
     fontFamily: 'BPG_Banner_QuadroSquare',
-    color: '#ff3d32',
+    color: '#f3673c',
     wordWrap: {
       width: cl.gameWidth - cl.physicsWidth - 10
     }
   })
 
-  let popBG = cl.add.rectangle(cl.physicsWidth / 2 + 135, cl.sys.canvas.height / 2 + 30, 840, 110, 0x0b1b2d, 0.7)
+  let popBG = cl.add.rectangle(cl.physicsWidth / 2 + 135, cl.sys.canvas.height / 2 + 40, 840, 130, 0x0b1b2d, 0.7)
   let popMessage = new Phaser.GameObjects.Text(cl, cl.physicsWidth / 2 - 200, cl.sys.canvas.height / 2, t, {
     fontSize: '27px',
-    color: '#ff3d32',
+    color: '#f3673c',
     fontFamily: 'BPG_Banner_QuadroSquare',
     wordWrap: {
       width: 750
@@ -304,12 +304,12 @@ export let hitObstacle = cl => {
   window.setTimeout(() => {
     popMessage.destroy()
     popBG.destroy()
-  }, 1300)
+  }, 1500)
 
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * (cl.level == 'house' ? 100 : 100) + 20)
+    text.setY(index * (cl.level == 'house' ? 110 : 110) + 30)
 
     if (text.displayList == null) {
       cl.add.existing(text)
