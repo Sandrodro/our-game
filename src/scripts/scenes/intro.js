@@ -4,6 +4,7 @@ export default class Intro extends Phaser.Scene {
   }
 
   preload() {
+    this.load.image('loading', 'assets/LOADING.png')
     this.load.image('intro', 'assets/Intro.png')
     this.load.image('howTo', 'assets/howtoplay.png')
     this.load.image('about', 'assets/about.png')

@@ -8,7 +8,37 @@ export default class Menu extends Phaser.Scene {
 
   preload() {
     this.load.image('levelSelect', 'assets/shuttle-horizontal-1100x600.png')
-    this.load.image('loading', 'assets/LOADING.png')
+
+    let backRect
+    let loadRect
+
+    this.load.on('start', val => {
+      this.loadImage = this.add.image(this.sys.game.canvas.width / 2, this.sys.game.canvas.height / 2, 'loading')
+      backRect = this.add.rectangle(
+        this.sys.game.canvas.width / 2,
+        this.sys.game.canvas.height / 2 + 310,
+        200,
+        50,
+        0xff78ab,
+        1
+      )
+      loadRect = this.add.rectangle(
+        this.sys.game.canvas.width / 2,
+        this.sys.game.canvas.height / 2 + 310,
+        1,
+        40,
+        0xffffff,
+        1
+      )
+    })
+
+    this.load.on('progress', val => {
+      loadRect.displayWidth = val * 200
+    })
+
+    this.load.on('complete', () => {
+      this.loadImage.destroy()
+    })
   }
 
   create() {
