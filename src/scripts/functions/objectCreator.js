@@ -214,17 +214,17 @@ export let createPlayer = cl => {
   return cl.player
 }
 
-export let hitHelper = cl => {
+export let hitHelper = (cl) => {
   cl.bonusNumber += 1
-  cl.hitNumber = 0
   let t
   if (cl.level == 'job') {
     t = jobText.helperText[cl.bonusNumber - 1]
   } else if (cl.level == 'house') {
+    cl.hitNumber = 0
     t = apartmentText.helperText[cl.bonusNumber - 1]
   }
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
-    fontSize: cl.level == 'house' ? '21px' : '23px',
+    fontSize: cl.level == 'house' ? '23px' : '21px',
     color: '#4dbd94',
     fontFamily: 'BPG_Banner_QuadroSquare',
     wordWrap: {
@@ -252,7 +252,7 @@ export let hitHelper = cl => {
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * (cl.level == 'house' ? 110 : 110) + 30)
+    text.setY(index * (cl.level == 'house' ? 130 : 140) + 40)
 
     if (text.displayList == null) {
       cl.add.existing(text)
@@ -267,7 +267,7 @@ export let hitHelper = cl => {
   }, 500)
 }
 
-export let hitObstacle = cl => {
+export let hitObstacle = (cl) => {
   let t
   if (cl.level == 'job') {
     t = jobText.bombText[cl.hitNumber]
@@ -281,7 +281,7 @@ export let hitObstacle = cl => {
   }
   cl.hitNumber += 1
   let message = new Phaser.GameObjects.Text(cl, cl.physicsWidth + 10, 0, t, {
-    fontSize: cl.level == 'house' ? '21px' : '23px',
+    fontSize: cl.level == 'house' ? '23px' : '21px',
     fontFamily: 'BPG_Banner_QuadroSquare',
     color: '#f3673c',
     wordWrap: {
@@ -309,7 +309,7 @@ export let hitObstacle = cl => {
   cl.messages.unshift(message)
 
   cl.messages.forEach((text, index) => {
-    text.setY(index * (cl.level == 'house' ? 110 : 110) + 30)
+    text.setY(index * (cl.level == 'house' ? 130 : 140) + 40)
 
     if (text.displayList == null) {
       cl.add.existing(text)

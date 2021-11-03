@@ -287,6 +287,7 @@ export default class Level1 extends Phaser.Scene {
     if (this.bonusNumber == this.bonusRequired) {
       this.worldSpeedUp = 0
       this.hitNumber = 0
+      this.bonusNumber = 0
       this.shieldActive = false
       this.liveUP = false
       this.pauseState = 'running'
@@ -294,6 +295,7 @@ export default class Level1 extends Phaser.Scene {
     } else if (this.lives == 0) {
       this.worldSpeedUp = 0
       this.hitNumber = 0
+      this.bonusNumber = 0
       this.shieldActive = false
       this.liveUP = false
       this.pauseState = 'running'

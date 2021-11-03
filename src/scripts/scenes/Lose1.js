@@ -7,6 +7,7 @@ export default class Lose1 extends Phaser.Scene {
   messages
   displayMessages = []
   level
+  icons
 
   init(data) {
     this.messages = data.messages
@@ -20,8 +21,16 @@ export default class Lose1 extends Phaser.Scene {
         this.displayMessages.push(message)
       }
     })
+
+    let meaningText = this.add.text(this.sys.game.canvas.width / 2 - 300, 300, "გავლილი დაბრკოლებები და ბონუსები:", {
+      fontSize: '31px',
+      fontFamily: 'BPG_Banner_QuadroSquare',
+      align: 'center',
+      color: "#FFFFFF"
+    })
+
     this.displayMessages.reverse().forEach((message, index) => {
-      let text = this.add.text((message.width * 2) / 3, 320 + index * 95, message._text, {
+      let text = this.add.text((message.width * 2) / 3, 320 + 50 + index * 120, message._text, {
         fontSize: '29px',
         fontFamily: 'BPG_Banner_QuadroSquare',
         align: 'center',
