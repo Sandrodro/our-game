@@ -89,6 +89,8 @@ export default class Level1 extends Phaser.Scene {
   left
   right
 
+  acc
+
   worldSpeedUp
 
   preload() {
@@ -261,11 +263,7 @@ export default class Level1 extends Phaser.Scene {
         cont.destroy()
       }
     })
-    // როცა ნიტა პაუზის დიზაინს მოგცემს, ახალი სცენა გააკეთე პაუზისთვის და პაუზის გამოჩენისას
-    // ამ სცენას დააპაუზებ, გადახვალ პაუზის სცენაში და მერე რიზიუმ თუ მოგინდება
-    // პაუზის სცენიდან გააგრძელებ ამ სცენას
-
-    let acc = this.time.addEvent({
+    this.acc = this.time.addEvent({
       delay: 7000,
       callback: () => {
         increaseVelocity(this.bomb2)
@@ -291,6 +289,20 @@ export default class Level1 extends Phaser.Scene {
       this.shieldActive = false
       this.liveUP = false
       this.pauseState = 'running'
+      this.bomb.destroy()
+      this.bomb2.destroy()
+      this.horizontal_mover.destroy()
+      this.vertical_mover.destroy()
+      this.helper.destroy()
+      this.speedPowerUp.destroy()
+      this.background.destroy()
+      this.player.destroy()
+      this.helperGroup.destroy()
+      this.vertical_moverGroup.destroy()
+      this.horizontal_moverGroup.destroy()
+      this.bombGroup.destroy()
+      this.bomb2Group.destroy()
+      this.acc.destroy()
       this.scene.start('Win1', { messages: this.messages, level: this.level })
     } else if (this.lives == 0) {
       this.worldSpeedUp = 0
@@ -299,6 +311,20 @@ export default class Level1 extends Phaser.Scene {
       this.shieldActive = false
       this.liveUP = false
       this.pauseState = 'running'
+      this.bomb.destroy()
+      this.bomb2.destroy()
+      this.horizontal_mover.destroy()
+      this.vertical_mover.destroy()
+      this.helper.destroy()
+      this.speedPowerUp.destroy()
+      this.background.destroy()
+      this.player.destroy()
+      this.helperGroup.destroy()
+      this.vertical_moverGroup.destroy()
+      this.horizontal_moverGroup.destroy()
+      this.bombGroup.destroy()
+      this.bomb2Group.destroy()
+      this.acc.destroy()
       this.scene.start('Lose1', { messages: this.messages, level: this.level })
     }
 
